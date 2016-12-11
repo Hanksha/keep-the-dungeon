@@ -38,7 +38,14 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
     private MoveComponent move;
     private int playerId;
 
+    private final int numArrowType = 3;
+    public final int ARROW_YELLOW = 0;
+    public final int ARROW_BLUE = 1;
+    public final int ARROW_RED = 2;
+    private final String[] arrowTypes = new String[] {"arrow-yellow", "arrow-blue", "arrow-red"};
+
     private float arrowSpeed = 600;
+    private int currentArrowType;
     private float shootRateTime = 0.6f;
     private float shootCooldown = 0;
 
@@ -75,12 +82,33 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
         Group playerActor = (Group) actorMapper.get(playerId).actor;
         BaseActor crossbowActor = playerActor.findActor("crossbow");
         Vector2 pos = crossbowActor.localToStageCoordinates(new Vector2(crossbowActor.getOriginX(), 5));
-        int id = entityFactory.fireProjectile("arrow-blue", pos.x, pos.y, crossbowActor.getRotation(), arrowSpeed);
+        int id = entityFactory.fireProjectile(arrowTypes[currentArrowType], pos.x, pos.y, crossbowActor.getRotation(), arrowSpeed);
         groupManager.addTo("player-arrows", id);
+    }
+
+    private void setArrowType() {
+        currentArrowType++;
+
+        if(currentArrowType >= numArrowType)
+            currentArrowType = 0;
+
+        shootCooldown = shootRateTime / 2;
+    }
+
+    public int getCurrentArrowType() {
+        return currentArrowType;
     }
 
     public int getPlayerId() {
         return playerId;
+    }
+
+    public float getShootCooldown() {
+        return shootCooldown / shootRateTime;
+    }
+
+    public Group getActor() {
+        return (Group) actorMapper.get(playerId).actor;
     }
 
     @Override
@@ -137,8 +165,7 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
         if(button == Input.Buttons.LEFT)
             fireArrow();
         else if(button == Input.Buttons.RIGHT) {
-            Vector2 mouse = InputUtils.getMouse(camera);
-            logger.info(roomSystem.isTilePosition("collision", mouse.x, mouse.y));
+            setArrowType();
         }
         return false;
     }

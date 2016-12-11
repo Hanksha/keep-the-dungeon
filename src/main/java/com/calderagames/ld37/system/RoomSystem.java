@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.calderagames.ld37.LD37Game;
 import com.calderagames.ld37.system.component.ActorComponent;
 import com.calderagames.ld37.utils.ActionUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,7 +87,7 @@ public class RoomSystem extends BaseSystem {
     }
 
     private void popEnemy() {
-        int id = entityFactory.makeEntity("moblin-orange", enemySpawnPos.x, enemySpawnPos.y);
+        int id = entityFactory.makeEnemy("enemy-javeliner", RandomUtils.nextInt(0, 3), enemySpawnPos.x, enemySpawnPos.y);
         SequenceAction sequence =
                 ActionUtils.moveTo(50f, actorMapper.get(id).actor,
                 Actions.moveToAligned(580, 60, Align.center),

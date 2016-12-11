@@ -80,7 +80,7 @@ public class GroupManager extends PassiveSystem {
 
         for(int i = 0; i < groups.size(); i++) {
             IntBag entities = entitiesByGroup.get(groups.get(i));
-            if(entities != null) {
+            if(entities != null && entityId < entities.size()) {
                 entities.remove(entityId);
             }
         }

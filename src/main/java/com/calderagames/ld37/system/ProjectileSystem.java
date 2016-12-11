@@ -6,12 +6,14 @@ import com.artemis.utils.IntBag;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
 import com.calderagames.ld37.system.component.ActorComponent;
+import com.calderagames.ld37.system.component.EnemyComponent;
 import com.calderagames.ld37.system.event.HitEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.calderagames.ld37.LD37Game.NATIVE_HEIGHT;
 import static com.calderagames.ld37.LD37Game.NATIVE_WIDTH;
+import static com.calderagames.ld37.system.component.EnemyComponent.*;
 
 public class ProjectileSystem extends BaseSystem {
 
@@ -21,6 +23,7 @@ public class ProjectileSystem extends BaseSystem {
     private GroupManager groupManager;
     private EntityFactory entityFactory;
     private ComponentMapper<ActorComponent> actorMapper;
+    private ComponentMapper<EnemyComponent> enemyMapper;
 
     @Override
     protected void processSystem() {
@@ -44,6 +47,8 @@ public class ProjectileSystem extends BaseSystem {
 
         projectiles = groupManager.getEntities("player-arrows");
 
+        EnemyComponent enemyComp;
+
         for(int i = 0, id; i < projectiles.size(); i++) {
             id = projectiles.get(i);
 
@@ -55,10 +60,23 @@ public class ProjectileSystem extends BaseSystem {
 
             if(actor != null) {
                 entityFactory.removeEntity(id);
-                eventSystem.send(new HitEvent((int) actor.getUserObject(), id, 1));
+                int targetId = (int) actor.getUserObject();
+
+                enemyComp = enemyMapper.get(targetId);
+
+                if(isTypeMatchArrow(enemyComp.type, projActor))
+                    eventSystem.send(new HitEvent(targetId, id, 1));
+                else
+                    logger.info("wrong arrow type");
             }
         }
 
+    }
+
+    private boolean isTypeMatchArrow(int type, Actor arrowActor) {
+        return (type == TYPE_YELLOW && arrowActor.getName().equals("arrow-yellow")) ||
+               (type == TYPE_BLUE && arrowActor.getName().equals("arrow-blue")) ||
+               (type == TYPE_RED && arrowActor.getName().equals("arrow-red"));
     }
 
     private boolean isOutStage(Actor actor) {

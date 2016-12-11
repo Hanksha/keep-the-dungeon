@@ -8,8 +8,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.calderagames.ld37.system.component.HealthComponent;
 import com.calderagames.ld37.system.event.HealthEvent;
 import com.calderagames.ld37.system.event.SystemEvent;
@@ -30,10 +34,15 @@ public class HUDSystem extends BaseSystem implements SystemEventListener {
     private Stage stage;
     private Group hudGroup;
     private HorizontalGroup healthGroup;
+    private Image quiverImage;
+    private NinePatchDrawable[] reloadBars;
+    private TextureRegionDrawable[] reloadBarBgs;
+    private Image reloadBarImg;
+    private Image reloadBarBgImg;
 
     private TextureRegion heartFullImg;
     private TextureRegion heartEmptyImg;
-
+    private TextureRegionDrawable[] quiverRegions;
 
     @Override
     protected void initialize() {
@@ -47,14 +56,52 @@ public class HUDSystem extends BaseSystem implements SystemEventListener {
         TextureAtlas atlas = assets.get("textures/textures.atlas");
         heartFullImg = atlas.findRegion("heart-full");
         heartEmptyImg = atlas.findRegion("heart-empty");
-
         setHealth();
-
         eventSystem.subscribe(HealthEvent.class, this);
+
+        quiverRegions = new TextureRegionDrawable[3];
+        quiverRegions[0] = new TextureRegionDrawable(atlas.findRegion("quiver-yellow"));
+        quiverRegions[1] = new TextureRegionDrawable(atlas.findRegion("quiver-blue"));
+        quiverRegions[2] = new TextureRegionDrawable(atlas.findRegion("quiver-red"));
+
+        quiverImage = new Image(quiverRegions[0]);
+        quiverImage.setPosition(30, 30, Align.center);
+        hudGroup.addActor(quiverImage);
+
+        reloadBars = new NinePatchDrawable[3];
+        reloadBars[0] = new NinePatchDrawable(atlas.createPatch("reload-yellow-full"));
+        reloadBars[1] = new NinePatchDrawable(atlas.createPatch("reload-blue-full"));
+        reloadBars[2] = new NinePatchDrawable(atlas.createPatch("reload-red-full"));
+
+        reloadBarBgs = new TextureRegionDrawable[3];
+        reloadBarBgs[0] = new TextureRegionDrawable(atlas.findRegion("reload-yellow-empty"));
+        reloadBarBgs[1] = new TextureRegionDrawable(atlas.findRegion("reload-blue-empty"));
+        reloadBarBgs[2] = new TextureRegionDrawable(atlas.findRegion("reload-red-empty"));
+
+        Group playerActor = playerSystem.getActor();
+
+        reloadBarBgImg = new Image(reloadBarBgs[0]);
+        reloadBarBgImg.setTouchable(Touchable.disabled);
+        reloadBarBgImg.setPosition(0, 45, Align.center | Align.top);
+        playerActor.addActor(reloadBarBgImg);
+
+        reloadBarImg = new Image(reloadBars[0]);
+        reloadBarImg.setTouchable(Touchable.disabled);
+        reloadBarImg.setPosition(-7, 45, Align.center | Align.top);
+        playerActor.addActor(reloadBarImg);
     }
 
     @Override
     protected void processSystem() {
+        quiverImage.setDrawable(quiverRegions[playerSystem.getCurrentArrowType()]);
+
+        reloadBarImg.setVisible(playerSystem.getShootCooldown() < 1f);
+        reloadBarImg.setDrawable(reloadBars[playerSystem.getCurrentArrowType()]);
+        reloadBarImg.setSize(20 * playerSystem.getShootCooldown(), 4);
+
+        reloadBarBgImg.setVisible(playerSystem.getShootCooldown() < 1f);
+        reloadBarBgImg.setDrawable(reloadBarBgs[playerSystem.getCurrentArrowType()]);
+
 
     }
 

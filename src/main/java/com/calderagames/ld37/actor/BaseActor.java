@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 
 public class BaseActor extends Group {
 
-    private TextureRegion region;
+    protected TextureRegion region;
 
     public BaseActor(TextureRegion region) {
         this.region = region;
