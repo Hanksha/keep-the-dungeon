@@ -7,16 +7,25 @@ public class AnimationActor extends BaseActor {
     protected float stateTime;
     protected Animation anim;
 
-    public AnimationActor(Animation animation) {
-        super(animation.getKeyFrame(0));
-        anim = animation;
+    public AnimationActor(Animation anim) {
+        super(anim == null? null: anim.getKeyFrame(0));
+        this.anim = anim;
+    }
+
+    public void setAnimation(Animation anim) {
+        this.anim = anim;
+        stateTime = 0;
     }
 
     @Override
     public void act(float delta) {
+        if(anim == null)
+            return;
+
+
         stateTime += delta;
 
-        region = anim.getKeyFrame(stateTime);
+        setRegion(anim.getKeyFrame(stateTime));
 
         super.act(delta);
     }

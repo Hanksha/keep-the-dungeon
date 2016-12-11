@@ -45,6 +45,7 @@ public class PlayScreen extends ScreenAdapter {
                 .with(new PhysicsSystem())
                 .with(new CollisionSystem())
                 .with(new PostPhysicsSystem())
+                .with(new AnimationSystem())
                 .with(new HealthSystem())
                 .with(new ProjectileSystem())
                 .with(new RoomSystem())

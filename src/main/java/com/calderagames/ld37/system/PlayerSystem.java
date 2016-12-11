@@ -8,9 +8,10 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.calderagames.ld37.actor.BaseActor;
 import com.calderagames.ld37.system.component.ActorComponent;
+import com.calderagames.ld37.system.component.AnimationComponent;
 import com.calderagames.ld37.system.component.MoveComponent;
 import com.calderagames.ld37.system.component.PhysicsComponent;
 import com.calderagames.ld37.utils.InputUtils;
@@ -29,12 +30,17 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
     @Wire(name = "camera")
     private Camera camera;
 
+    @Wire
+    private Stage stage;
+    private boolean debug;
+
     private EntityFactory entityFactory;
     private GroupManager groupManager;
     private RoomSystem roomSystem;
     private ComponentMapper<MoveComponent> moveMapper;
     private ComponentMapper<ActorComponent> actorMapper;
     private ComponentMapper<PhysicsComponent> physicsMapper;
+    private ComponentMapper<AnimationComponent> animMapper;
     private MoveComponent move;
     private int playerId;
 
@@ -48,6 +54,7 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
     private int currentArrowType;
     private float shootRateTime = 0.6f;
     private float shootCooldown = 0;
+    private float aimAngle;
 
     @Override
     protected void initialize() {
@@ -58,6 +65,7 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
     @Override
     protected void processSystem() {
         processAim();
+        processAnim();
         shootCooldown += world.delta;
     }
 
@@ -66,11 +74,45 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
         Group playerActor = (Group) actorMapper.get(playerId).actor;
         BaseActor crossbowActor = playerActor.findActor("crossbow");
 
-        float angle = Maths.getAngle(
-                playerActor.getX(Align.center),
-                playerActor.getY(Align.center),
+        Vector2 pos = crossbowActor.localToStageCoordinates(
+                new Vector2(crossbowActor.getOriginX(), crossbowActor.getOriginY()));
+
+        aimAngle = Maths.getAngle(
+                pos.x,
+                pos.y,
                 mouse.x, mouse.y);
-        crossbowActor.setRotation(angle - 90);
+        crossbowActor.setRotation(aimAngle - 90);
+
+        if(aimAngle < 0)
+            aimAngle = aimAngle + 360;
+
+        logger.info(aimAngle);
+    }
+
+    private void processAnim() {
+        AnimationComponent animComp = animMapper.get(playerId);
+        if((aimAngle <= 45 && aimAngle >= 0) || (aimAngle >= 315 && aimAngle <= 360))
+            animComp.direction = AnimationComponent.Direction.RIGHT;
+        else if(aimAngle > 45 && aimAngle < 135)
+            animComp.direction = AnimationComponent.Direction.UP;
+        else if(aimAngle >= 135 && aimAngle < 225)
+            animComp.direction = AnimationComponent.Direction.LEFT;
+        else if(aimAngle >= 225 && aimAngle < 315)
+            animComp.direction = AnimationComponent.Direction.DOWN;
+
+        PhysicsComponent physicsComp = physicsMapper.get(playerId);
+
+        if(Math.abs(physicsComp.vx) > 2 || Math.abs(physicsComp.vy) > 2)
+            animComp.anim = "player-walk";
+        else
+            animComp.anim = "player-idle";
+
+        BaseActor crossbowActor = ((Group) actorMapper.get(playerId).actor).findActor("crossbow");
+
+        if(animComp.direction == AnimationComponent.Direction.DOWN)
+            crossbowActor.setZIndex(10);
+        else
+            crossbowActor.setZIndex(0);
     }
 
     private void fireArrow() {
@@ -150,6 +192,8 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
             case DOWN:
                 move.down = false;
                 break;
+            case F4:
+                stage.setDebugAll(debug = !debug);
             default: break;
         }
         return false;

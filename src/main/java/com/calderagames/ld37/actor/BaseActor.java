@@ -10,13 +10,22 @@ public class BaseActor extends Group {
     protected TextureRegion region;
 
     public BaseActor(TextureRegion region) {
+        setRegion(region);
+    }
+
+    public void setRegion(TextureRegion region) {
         this.region = region;
-        setSize(region.getRegionWidth(), region.getRegionHeight());
+
+        if(region != null)
+            setSize(region.getRegionWidth(), region.getRegionHeight());
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+
+        if(region == null)
+            return;
 
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);

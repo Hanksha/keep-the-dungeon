@@ -6,7 +6,9 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -80,6 +82,9 @@ public class LD37Game extends Game {
         assets.load("textures/textures.atlas", TextureAtlas.class);
 
         assets.finishLoading();
+
+        Cursor cursor = Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("cursor.png")), 32, 32);
+        Gdx.graphics.setCursor(cursor);
     }
 
     @Override

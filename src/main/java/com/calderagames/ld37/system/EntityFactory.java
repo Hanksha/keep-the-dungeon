@@ -30,6 +30,7 @@ public class EntityFactory extends PassiveSystem {
     private ComponentMapper<PhysicsComponent> physicsMapper;
     private ComponentMapper<CollisionComponent> collisionMapper;
     private ComponentMapper<EnemyComponent> enemyMapper;
+    private ComponentMapper<AnimationComponent> animMapper;
 
     @Wire
     private Stage stage;
@@ -76,6 +77,7 @@ public class EntityFactory extends PassiveSystem {
         archetypes.put("basic-entity", archetype);
 
         archetype = new ArchetypeBuilder(archetypes.get("basic-entity"))
+                .add(AnimationComponent.class)
                 .build(world);
         archetypes.put("player", archetype);
 
@@ -131,6 +133,10 @@ public class EntityFactory extends PassiveSystem {
         collision.offX = 0;
         collision.offY = 5;
 
+        AnimationComponent animComp = animMapper.get(id);
+        animComp.anim = "player-idle";
+        animComp.direction = AnimationComponent.Direction.DOWN;
+
         // set actors
         ActorComponent actorComp = actorMapper.get(id);
         Group parentActor = new Group();
@@ -149,10 +155,11 @@ public class EntityFactory extends PassiveSystem {
         collisionActor.setOrigin(Align.center | Align.bottom);
         parentActor.addActor(collisionActor);
 
-        BaseActor bodyActor = new BaseActor(atlas.findRegion("player/player-idle-down"));
+        AnimationActor bodyActor = new AnimationActor(null);
+        bodyActor.setSize(30, 37);
         bodyActor.setPosition(0, 0, Align.center | Align.bottom);
         bodyActor.setOrigin(Align.center | Align.bottom);
-        bodyActor.setName("player-body");
+        bodyActor.setName("body");
         bodyActor.setTouchable(Touchable.disabled);
         bodyActor.setZIndex(4);
         parentActor.addActor(bodyActor);
@@ -207,7 +214,7 @@ public class EntityFactory extends PassiveSystem {
         bodyActor.setPosition(0, 0, Align.center | Align.bottom);
         bodyActor.setTouchable(Touchable.disabled);
         bodyActor.setOrigin(Align.center | Align.bottom);
-        bodyActor.setName("enemy-javeliner");
+        bodyActor.setName("body");
         parentActor.addActor(bodyActor);
     }
 
