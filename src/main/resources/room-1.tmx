@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="40" tileheight="40" nextobjectid="15">
+ <tileset firstgid="1" name="tiles" tilewidth="40" tileheight="40" tilecount="53" columns="0">
+  <tile id="0">
+   <image width="40" height="40" source="tiles/tile-1.png"/>
+  </tile>
+  <tile id="1">
+   <image width="40" height="40" source="tiles/tile-2.png"/>
+  </tile>
+  <tile id="2">
+   <image width="40" height="40" source="tiles/tile-3.png"/>
+  </tile>
+  <tile id="3">
+   <image width="40" height="40" source="tiles/tile-4.png"/>
+  </tile>
+  <tile id="4">
+   <image width="40" height="40" source="tiles/tile-5_1.png"/>
+   <animation>
+    <frame tileid="4" duration="400"/>
+    <frame tileid="5" duration="400"/>
+   </animation>
+  </tile>
+  <tile id="5">
+   <image width="40" height="40" source="tiles/tile-5_2.png"/>
+  </tile>
+  <tile id="6">
+   <image width="40" height="40" source="tiles/tile-5.png"/>
+  </tile>
+  <tile id="7">
+   <image width="40" height="40" source="tiles/tile-6.png"/>
+  </tile>
+  <tile id="8">
+   <image width="40" height="40" source="tiles/tile-7.png"/>
+  </tile>
+  <tile id="9">
+   <image width="40" height="40" source="tiles/tile-8.png"/>
+  </tile>
+  <tile id="10">
+   <image width="40" height="40" source="tiles/tile-9.png"/>
+  </tile>
+  <tile id="11">
+   <image width="40" height="40" source="tiles/tile-10.png"/>
+  </tile>
+  <tile id="12">
+   <image width="40" height="40" source="tiles/tile-11.png"/>
+  </tile>
+  <tile id="13">
+   <image width="40" height="40" source="tiles/tile-12.png"/>
+  </tile>
+  <tile id="14">
+   <image width="40" height="40" source="tiles/tile-13.png"/>
+  </tile>
+  <tile id="15">
+   <image width="40" height="40" source="tiles/tile-14.png"/>
+  </tile>
+  <tile id="16">
+   <image width="40" height="40" source="tiles/tile-15.png"/>
+  </tile>
+  <tile id="17">
+   <image width="40" height="40" source="tiles/tile-16.png"/>
+  </tile>
+  <tile id="18">
+   <image width="40" height="40" source="tiles/tile-17.png"/>
+  </tile>
+  <tile id="19">
+   <image width="40" height="40" source="tiles/tile-18.png"/>
+  </tile>
+  <tile id="20">
+   <image width="40" height="40" source="tiles/tile-19.png"/>
+  </tile>
+  <tile id="21">
+   <image width="40" height="40" source="tiles/tile-20.png"/>
+  </tile>
+  <tile id="22">
+   <image width="40" height="40" source="tiles/tile-21.png"/>
+  </tile>
+  <tile id="23">
+   <image width="40" height="40" source="tiles/tile-22.png"/>
+  </tile>
+  <tile id="24">
+   <image width="40" height="40" source="tiles/tile-23.png"/>
+  </tile>
+  <tile id="25">
+   <image width="40" height="40" source="tiles/tile-24.png"/>
+  </tile>
+  <tile id="26">
+   <image width="40" height="40" source="tiles/tile-25.png"/>
+  </tile>
+  <tile id="27">
+   <image width="40" height="40" source="tiles/tile-26.png"/>
+  </tile>
+  <tile id="28">
+   <image width="40" height="40" source="tiles/tile-27.png"/>
+  </tile>
+  <tile id="29">
+   <image width="40" height="40" source="tiles/tile-28.png"/>
+  </tile>
+  <tile id="30">
+   <image width="40" height="40" source="tiles/tile-29.png"/>
+  </tile>
+  <tile id="31">
+   <image width="40" height="40" source="tiles/tile-30.png"/>
+  </tile>
+  <tile id="32">
+   <image width="40" height="40" source="tiles/tile-31.png"/>
+  </tile>
+  <tile id="33">
+   <image width="40" height="40" source="tiles/tile-32.png"/>
+  </tile>
+  <tile id="34">
+   <image width="40" height="40" source="tiles/tile-33.png"/>
+  </tile>
+  <tile id="35">
+   <image width="40" height="40" source="tiles/tile-34.png"/>
+  </tile>
+  <tile id="36">
+   <image width="40" height="40" source="tiles/tile-35.png"/>
+  </tile>
+  <tile id="37">
+   <image width="40" height="40" source="tiles/tile-36.png"/>
+  </tile>
+  <tile id="38">
+   <image width="40" height="40" source="tiles/tile-37_1.png"/>
+   <animation>
+    <frame tileid="38" duration="500"/>
+    <frame tileid="39" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="39">
+   <image width="40" height="40" source="tiles/tile-37_2.png"/>
+  </tile>
+  <tile id="40">
+   <image width="40" height="40" source="tiles/tile-38_1.png"/>
+   <animation>
+    <frame tileid="40" duration="500"/>
+    <frame tileid="41" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="41">
+   <image width="40" height="40" source="tiles/tile-38_2.png"/>
+  </tile>
+  <tile id="42">
+   <image width="40" height="40" source="tiles/tile-39_1.png"/>
+   <animation>
+    <frame tileid="42" duration="500"/>
+    <frame tileid="43" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="43">
+   <image width="40" height="40" source="tiles/tile-39_2.png"/>
+  </tile>
+  <tile id="44">
+   <image width="40" height="40" source="tiles/tile-40_1.png"/>
+   <animation>
+    <frame tileid="44" duration="500"/>
+    <frame tileid="45" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="45">
+   <image width="40" height="40" source="tiles/tile-40_2.png"/>
+  </tile>
+  <tile id="46">
+   <image width="40" height="40" source="tiles/tile-41_1.png"/>
+   <animation>
+    <frame tileid="46" duration="500"/>
+    <frame tileid="47" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="47">
+   <image width="40" height="40" source="tiles/tile-41_2.png"/>
+  </tile>
+  <tile id="48">
+   <image width="40" height="40" source="tiles/tile-42_1.png"/>
+   <animation>
+    <frame tileid="48" duration="500"/>
+    <frame tileid="49" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="49">
+   <image width="40" height="40" source="tiles/tile-42_2.png"/>
+  </tile>
+  <tile id="50">
+   <image width="40" height="40" source="tiles/tile-43_1.png"/>
+   <animation>
+    <frame tileid="50" duration="500"/>
+    <frame tileid="51" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="51">
+   <image width="40" height="40" source="tiles/tile-43_2.png"/>
+  </tile>
+  <tile id="52">
+   <image width="40" height="40" source="tiles/tile-44.png"/>
+  </tile>
+ </tileset>
+ <layer name="floor1" width="16" height="9">
+  <data encoding="base64">
+   CAAAgAIAAAAFAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAUAAAACAAAACAAAAAIAAGARAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAADgAAAA4AAAAOAAAAEAAAAAIAAKACAABgEgAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAAA8AAAACAACgAgAAYBIAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAPAAAAAgAAoAIAAGASAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAADwAAAAIAAKACAABgEgAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAAA8AAAACAACgAgAAYBIAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAPAAAAAgAAoAIAAGAdAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAHAAAAAIAAKAIAADAAgAAQAIAAEACAABAAgAAQAIAAEACAABAAgAAQAIAAEACAABAAgAAQAIAAEACAABAAgAAQAIAAEAIAABA
+  </data>
+ </layer>
+ <layer name="lava" width="16" height="9">
+  <data encoding="base64">
+   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAvAAAAJwAAACkAAAApAAAAKQAAACkAAAApAAAAJwAAACcAAAAnAAAAJwAAACkAAAAnAAAALwAAgAAAAAAAAAAAJwAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACkAAKAAAAAAAAAAACkAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnAACgAAAAAAAAAAAnAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKQAAoAAAAAAAAAAAKQAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACcAAKAAAAAAAAAAACcAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnAACgAAAAAAAAAAAxAAAAKwAAAC0AAAArAAAAKwAAAC0AAAArAAAAMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJwAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  </data>
+ </layer>
+ <layer name="floor2" width="16" height="9">
+  <data encoding="base64">
+   AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  </data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="6" name="exitGate" x="280" y="0" width="80" height="40"/>
+  <object id="13" name="enemyGate" x="560" y="320" width="40" height="40"/>
+ </objectgroup>
+ <layer name="collision" width="16" height="9" visible="0" opacity="0.23">
+  <data encoding="base64">
+   NQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAA1AAAANQAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAANQAAADUAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAADUAAAA1AAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAA1AAAANQAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAANQAAADUAAAA1AAAA
+  </data>
+ </layer>
+</map>
