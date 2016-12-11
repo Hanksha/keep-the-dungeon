@@ -6,15 +6,18 @@ import com.artemis.utils.IntBag;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
 import com.calderagames.ld37.system.component.ActorComponent;
+import com.calderagames.ld37.system.event.HitEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.calderagames.ld37.LD37Game.*;
+import static com.calderagames.ld37.LD37Game.NATIVE_HEIGHT;
+import static com.calderagames.ld37.LD37Game.NATIVE_WIDTH;
 
 public class ProjectileSystem extends BaseSystem {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private EventSystem eventSystem;
     private GroupManager groupManager;
     private EntityFactory entityFactory;
     private ComponentMapper<ActorComponent> actorMapper;
@@ -51,8 +54,8 @@ public class ProjectileSystem extends BaseSystem {
             Actor actor = entityFactory.getEnemiesGroup().hit(projActor.getX(Align.center), projActor.getY(Align.center), true);
 
             if(actor != null) {
-                logger.info(actor.getName());
                 entityFactory.removeEntity(id);
+                eventSystem.send(new HitEvent((int) actor.getUserObject(), id, 1));
             }
         }
 

@@ -59,14 +59,14 @@ enemies/moblin-walk-down
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
-  index: 1
+  index: 4
 enemies/moblin-walk-down
   rotate: false
   xy: 1384, 84
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
-  index: 4
+  index: 1
 enemies/moblin-idle-down
   rotate: false
   xy: 1576, 85
@@ -409,14 +409,14 @@ player/player-walk-down
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
-  index: 1
+  index: 6
 player/player-walk-down
   rotate: false
   xy: 1762, 88
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
-  index: 6
+  index: 1
 player/player-idle-down
   rotate: false
   xy: 211, 36
@@ -627,14 +627,14 @@ quiver-red
   orig: 29, 46
   offset: 0, 0
   index: -1
-reload_empty
+reload-empty
   rotate: false
   xy: 749, 80
   size: 20, 4
   orig: 20, 4
   offset: 0, 0
   index: -1
-reload_full
+reload-full
   rotate: false
   xy: 63, 8
   size: 20, 4

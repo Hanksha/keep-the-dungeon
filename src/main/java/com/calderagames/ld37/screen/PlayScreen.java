@@ -3,7 +3,6 @@ package com.calderagames.ld37.screen;
 import com.artemis.World;
 import com.artemis.WorldConfiguration;
 import com.artemis.WorldConfigurationBuilder;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
@@ -46,9 +45,11 @@ public class PlayScreen extends ScreenAdapter {
                 .with(new PhysicsSystem())
                 .with(new CollisionSystem())
                 .with(new PostPhysicsSystem())
+                .with(new HealthSystem())
                 .with(new ProjectileSystem())
                 .with(new RoomSystem())
                 .with(new HUDSystem())
+                .with(new DeathSystem())
                 .build()
                 .register(stage)
                 .register(batch)

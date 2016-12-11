@@ -14,8 +14,8 @@ public class EventSystem extends BaseSystem {
     private ArrayList<SystemEvent> events;
 
     public EventSystem() {
-        subscriptionMap = new HashMap<Class<? extends SystemEvent>, ArrayList<SystemEventListener>>();
-        events = new ArrayList<SystemEvent>();
+        subscriptionMap = new HashMap<>();
+        events = new ArrayList<>();
     }
 
     public void subscribe(Class<? extends SystemEvent> type, SystemEventListener listener) {
@@ -41,8 +41,18 @@ public class EventSystem extends BaseSystem {
             subscriptionMap.remove(type);
     }
 
-    public void dispatch(SystemEvent event) {
+    public void post(SystemEvent event) {
         events.add(event);
+    }
+
+    public void send(SystemEvent event) {
+        ArrayList<SystemEventListener> listeners = subscriptionMap.get(event.getClass());
+
+        if(listeners == null)
+            return;
+
+        for(SystemEventListener listener: listeners)
+            listener.receive(event);
     }
 
     @Override

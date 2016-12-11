@@ -3,28 +3,24 @@ package com.calderagames.ld37.system;
 import com.artemis.BaseSystem;
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.Wire;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.calderagames.ld37.actor.BaseActor;
 import com.calderagames.ld37.system.component.ActorComponent;
 import com.calderagames.ld37.system.component.MoveComponent;
 import com.calderagames.ld37.system.component.PhysicsComponent;
-import com.calderagames.ld37.utils.ActionUtils;
 import com.calderagames.ld37.utils.InputUtils;
 import com.calderagames.ld37.utils.Maths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.badlogic.gdx.Input.Keys.*;
-import static com.calderagames.ld37.LD37Game.*;
+import static com.calderagames.ld37.LD37Game.NATIVE_HEIGHT;
+import static com.calderagames.ld37.LD37Game.NATIVE_WIDTH;
 
 public class PlayerSystem extends BaseSystem implements InputProcessor {
 
@@ -79,7 +75,7 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
         Group playerActor = (Group) actorMapper.get(playerId).actor;
         BaseActor crossbowActor = playerActor.findActor("crossbow");
         Vector2 pos = crossbowActor.localToStageCoordinates(new Vector2(crossbowActor.getOriginX(), 5));
-        int id = entityFactory.fireProjectile("arrow", pos.x, pos.y, crossbowActor.getRotation(), arrowSpeed);
+        int id = entityFactory.fireProjectile("arrow-blue", pos.x, pos.y, crossbowActor.getRotation(), arrowSpeed);
         groupManager.addTo("player-arrows", id);
     }
 

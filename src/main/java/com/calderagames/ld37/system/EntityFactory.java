@@ -84,123 +84,133 @@ public class EntityFactory extends PassiveSystem {
                 .add(ActorComponent.class)
                 .add(PhysicsComponent.class)
                 .build(world);
-        archetypes.put("arrow", archetype);
+        archetypes.put("arrow-red", archetype);
+        archetypes.put("arrow-blue", archetype);
+        archetypes.put("arrow-orange", archetype);
     }
 
     public int makeEntity(String name) {
         int id = world.create(archetypes.get(name));
 
-        switch(name) {
-
-            case "player": {
-                groupManager.addTo("player", id);
-
-                // set movement stuff
-                MoveComponent moveComp = moveMapper.get(id);
-                moveComp.xAcc = moveComp.yAcc = 1000;
-
-                // set health
-                HealthComponent healthComp = healthMapper.get(id);
-                healthComp.health = healthComp.maxHealth = 3;
-                healthComp.immunitySpan = 1000;
-
-                CollisionComponent collision = collisionMapper.get(id);
-                collision.width = 12;
-                collision.height = 11;
-                collision.offX = 0;
-                collision.offY = 5;
-
-                // set actors
-                ActorComponent actorComp = actorMapper.get(id);
-                Group parentActor = new Group();
-                parentActor.setName("player");
-                parentActor.setTouchable(Touchable.childrenOnly);
-                playerGroup.addActor(parentActor);
-                actorComp.actor = parentActor;
-
-                Actor collisionActor = new Actor();
-                collisionActor.setName("collisionBox");
-                collisionActor.setTouchable(Touchable.enabled);
-                collisionActor.setSize(collision.width, collision.height);
-                collisionActor.setPosition(collision.offX, collision.offY, Align.center | Align.bottom);
-                collisionActor.setOrigin(Align.center | Align.bottom);
-                parentActor.addActor(collisionActor);
-
-                BaseActor bodyActor = new BaseActor(atlas.findRegion("player/player-idle-down"));
-                bodyActor.setPosition(0, 0, Align.center | Align.bottom);
-                bodyActor.setOrigin(Align.center | Align.bottom);
-                bodyActor.setName("player-body");
-                bodyActor.setTouchable(Touchable.disabled);
-                bodyActor.setZIndex(4);
-                parentActor.addActor(bodyActor);
-
-                BaseActor crossbowActor = new BaseActor(atlas.findRegion("crossbow", 1));
-                crossbowActor.setPosition(0, 13, Align.center | Align.bottom);
-                crossbowActor.setOrigin(Align.center | Align.bottom);
-                crossbowActor.setName("crossbow");
-                crossbowActor.setTouchable(Touchable.disabled);
-                parentActor.addActor(crossbowActor);
-
-                break;
-            }
-
-            case "moblin-orange": {
-                groupManager.addTo("enemies", id);
-
-                MoveComponent moveComp = moveMapper.get(id);
-                moveComp.xAcc = moveComp.yAcc = 1200;
-
-                HealthComponent healthComp = healthMapper.get(id);
-                healthComp.health = healthComp.maxHealth = 2;
-                healthComp.immunitySpan = 500;
-
-                CollisionComponent collision = collisionMapper.get(id);
-                collision.width = 18;
-                collision.height = 15;
-                collision.offX = 0;
-                collision.offY = 4;
-
-                ActorComponent actorComp = actorMapper.get(id);
-                Group parentActor = new Group();
-                parentActor.setName("moblin-orange");
-                parentActor.setTouchable(Touchable.childrenOnly);
-                enemiesGroup.addActor(parentActor);
-                actorComp.actor = parentActor;
-
-                Actor collisionActor = new Actor();
-                collisionActor.setName("collisionBox");
-                collisionActor.setTouchable(Touchable.enabled);
-                collisionActor.setSize(collision.width, collision.height);
-                collisionActor.setPosition(collision.offX, collision.offY, Align.center | Align.bottom);
-                collisionActor.setOrigin(Align.center | Align.bottom);
-                parentActor.addActor(collisionActor);
-
-                BaseActor bodyActor = new BaseActor(atlas.findRegion("enemies/moblin-throw-down", 1));
-                bodyActor.setPosition(0, 0, Align.center | Align.bottom);
-                bodyActor.setTouchable(Touchable.disabled);
-                bodyActor.setOrigin(Align.center | Align.bottom);
-                bodyActor.setName("moblin-orange");
-                parentActor.addActor(bodyActor);
-
-                break;
-            }
-
-            case "arrow": {
-                ActorComponent actorComp = actorMapper.get(id);
-                BaseActor actor = new BaseActor(atlas.findRegion("arrow-red"));
-                actor.setOrigin(Align.center);
-                actor.setName("arrow");
-                actorComp.actor = actor;
-                projectileGroup.addActor(actor);
-
-                PhysicsComponent physicsComp = physicsMapper.get(id);
-                physicsComp.frictionX = 0;
-                physicsComp.frictionY = 0;
-                groupManager.addTo("projectiles", id);
-            }
+        if(name.equals("player")) {
+            makePlayer(id);
+        }
+        else if(name.equals("moblin-orange")) {
+            makeMoblinOrange(id);
+        }
+        else if(name.startsWith("arrow")) {
+            makeArrow(id, name);
         }
 
         return id;
+    }
+
+    private void makePlayer(int id) {
+        groupManager.addTo("player", id);
+
+        // set movement stuff
+        MoveComponent moveComp = moveMapper.get(id);
+        moveComp.xAcc = moveComp.yAcc = 1000;
+
+        // set health
+        HealthComponent healthComp = healthMapper.get(id);
+        healthComp.health = healthComp.maxHealth = 3;
+        healthComp.immunitySpan = healthComp.immunityCooldown = 1f;
+
+        CollisionComponent collision = collisionMapper.get(id);
+        collision.width = 12;
+        collision.height = 11;
+        collision.offX = 0;
+        collision.offY = 5;
+
+        // set actors
+        ActorComponent actorComp = actorMapper.get(id);
+        Group parentActor = new Group();
+        parentActor.setName("player");
+        parentActor.setUserObject(id);
+        parentActor.setTouchable(Touchable.childrenOnly);
+        playerGroup.addActor(parentActor);
+        actorComp.actor = parentActor;
+
+        Actor collisionActor = new Actor();
+        collisionActor.setName("collisionBox");
+        collisionActor.setUserObject(id);
+        collisionActor.setTouchable(Touchable.enabled);
+        collisionActor.setSize(collision.width, collision.height);
+        collisionActor.setPosition(collision.offX, collision.offY, Align.center | Align.bottom);
+        collisionActor.setOrigin(Align.center | Align.bottom);
+        parentActor.addActor(collisionActor);
+
+        BaseActor bodyActor = new BaseActor(atlas.findRegion("player/player-idle-down"));
+        bodyActor.setPosition(0, 0, Align.center | Align.bottom);
+        bodyActor.setOrigin(Align.center | Align.bottom);
+        bodyActor.setName("player-body");
+        bodyActor.setTouchable(Touchable.disabled);
+        bodyActor.setZIndex(4);
+        parentActor.addActor(bodyActor);
+
+        BaseActor crossbowActor = new BaseActor(atlas.findRegion("crossbow", 1));
+        crossbowActor.setPosition(0, 13, Align.center | Align.bottom);
+        crossbowActor.setOrigin(Align.center | Align.bottom);
+        crossbowActor.setName("crossbow");
+        crossbowActor.setTouchable(Touchable.disabled);
+        parentActor.addActor(crossbowActor);
+    }
+
+    private void makeMoblinOrange(int id) {
+        groupManager.addTo("enemies", id);
+
+        MoveComponent moveComp = moveMapper.get(id);
+        moveComp.xAcc = moveComp.yAcc = 1200;
+
+        HealthComponent healthComp = healthMapper.get(id);
+        healthComp.health = healthComp.maxHealth = 2;
+        healthComp.immunitySpan = healthComp.immunityCooldown = 0.5f;
+
+        CollisionComponent collision = collisionMapper.get(id);
+        collision.width = 18;
+        collision.height = 15;
+        collision.offX = 0;
+        collision.offY = 4;
+
+        ActorComponent actorComp = actorMapper.get(id);
+        Group parentActor = new Group();
+        parentActor.setUserObject(id);
+        parentActor.setName("moblin-orange");
+        parentActor.setTouchable(Touchable.childrenOnly);
+        enemiesGroup.addActor(parentActor);
+        actorComp.actor = parentActor;
+
+        Actor collisionActor = new Actor();
+        collisionActor.setName("collisionBox");
+        collisionActor.setUserObject(id);
+        collisionActor.setTouchable(Touchable.enabled);
+        collisionActor.setSize(collision.width, collision.height);
+        collisionActor.setPosition(collision.offX, collision.offY, Align.center | Align.bottom);
+        collisionActor.setOrigin(Align.center | Align.bottom);
+        parentActor.addActor(collisionActor);
+
+        BaseActor bodyActor = new BaseActor(atlas.findRegion("enemies/moblin-throw-down", 1));
+        bodyActor.setPosition(0, 0, Align.center | Align.bottom);
+        bodyActor.setTouchable(Touchable.disabled);
+        bodyActor.setOrigin(Align.center | Align.bottom);
+        bodyActor.setName("moblin-orange");
+        parentActor.addActor(bodyActor);
+    }
+
+    private void makeArrow(int id, String name) {
+        ActorComponent actorComp = actorMapper.get(id);
+        BaseActor actor = new BaseActor(atlas.findRegion(name));
+        actor.setUserObject(id);
+        actor.setOrigin(Align.center);
+        actor.setName(name);
+        actorComp.actor = actor;
+        projectileGroup.addActor(actor);
+
+        PhysicsComponent physicsComp = physicsMapper.get(id);
+        physicsComp.frictionX = 0;
+        physicsComp.frictionY = 0;
+        groupManager.addTo("projectiles", id);
     }
 
     public int makeEntity(String name, float x, float y) {

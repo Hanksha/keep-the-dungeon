@@ -4,7 +4,6 @@ import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.systems.IteratingSystem;
 import com.artemis.utils.IntBag;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -14,6 +13,7 @@ import com.calderagames.ld37.system.component.CollisionComponent;
 import com.calderagames.ld37.system.component.PhysicsComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import static com.calderagames.ld37.system.RoomSystem.TILE_SIZE;
 
 public class CollisionSystem extends IteratingSystem {
@@ -78,10 +78,7 @@ public class CollisionSystem extends IteratingSystem {
 
             if(roomSystem.isTilePosition("collision", bounds.x, bounds.y + bounds.height) ||
                roomSystem.isTilePosition("collision", bounds.x + bounds.width - 1, bounds.y + bounds.height)) {
-                logger.info("before " + nextPos.y);
                 nextPos.y = (int) ((bounds.y + bounds.height) / TILE_SIZE) * TILE_SIZE - bounds.height - collision.offY;
-                logger.info("after " + nextPos.y);
-
                 collidedY = true;
             }
             else if(roomSystem.isTilePosition("collision", bounds.x, bounds.y) ||

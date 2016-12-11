@@ -15,7 +15,7 @@ import com.calderagames.ld37.system.event.HealthEvent;
 import com.calderagames.ld37.system.event.SystemEvent;
 import com.calderagames.ld37.system.event.SystemEventListener;
 
-import static com.calderagames.ld37.LD37Game.*;
+import static com.calderagames.ld37.LD37Game.NATIVE_HEIGHT;
 
 public class HUDSystem extends BaseSystem implements SystemEventListener {
 
