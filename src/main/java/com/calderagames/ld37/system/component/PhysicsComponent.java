@@ -4,8 +4,8 @@ import com.artemis.PooledComponent;
 
 public class PhysicsComponent extends PooledComponent {
 
-    public static final float DEFAULT_FRICTION_X = 6;
-    public static final float DEFAULT_FRICTION_Y = 6;
+    public static final float DEFAULT_FRICTION_X = 8;
+    public static final float DEFAULT_FRICTION_Y = 8;
 
     public float vx;
     public float vy;
