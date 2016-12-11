@@ -86,7 +86,6 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
         if(aimAngle < 0)
             aimAngle = aimAngle + 360;
 
-        logger.info(aimAngle);
     }
 
     private void processAnim() {

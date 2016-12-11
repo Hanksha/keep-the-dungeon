@@ -72,12 +72,12 @@ public class EntityFactory extends PassiveSystem {
                 .add(CollisionComponent.class)
                 .add(MoveComponent.class)
                 .add(HealthComponent.class)
+                .add(AnimationComponent.class)
                 .build(world);
 
         archetypes.put("basic-entity", archetype);
 
         archetype = new ArchetypeBuilder(archetypes.get("basic-entity"))
-                .add(AnimationComponent.class)
                 .build(world);
         archetypes.put("player", archetype);
 
@@ -156,12 +156,10 @@ public class EntityFactory extends PassiveSystem {
         parentActor.addActor(collisionActor);
 
         AnimationActor bodyActor = new AnimationActor(null);
-        bodyActor.setSize(30, 37);
         bodyActor.setPosition(0, 0, Align.center | Align.bottom);
         bodyActor.setOrigin(Align.center | Align.bottom);
         bodyActor.setName("body");
         bodyActor.setTouchable(Touchable.disabled);
-        bodyActor.setZIndex(4);
         parentActor.addActor(bodyActor);
 
         BaseActor crossbowActor = new BaseActor(atlas.findRegion("crossbow", 1));
@@ -188,6 +186,10 @@ public class EntityFactory extends PassiveSystem {
         collision.offX = 0;
         collision.offY = 4;
 
+        AnimationComponent animComp = animMapper.get(id);
+        animComp.anim = name + "-walk";
+        animComp.direction = AnimationComponent.Direction.DOWN;
+
         ActorComponent actorComp = actorMapper.get(id);
         Group parentActor = new Group();
         parentActor.setUserObject(id);
@@ -210,7 +212,7 @@ public class EntityFactory extends PassiveSystem {
     }
 
     private void makeJaveliner(int id, Group parentActor) {
-        BaseActor bodyActor = new BaseActor(atlas.findRegion("enemies/moblin-idle-down", 1));
+        AnimationActor bodyActor = new AnimationActor(null);
         bodyActor.setPosition(0, 0, Align.center | Align.bottom);
         bodyActor.setTouchable(Touchable.disabled);
         bodyActor.setOrigin(Align.center | Align.bottom);

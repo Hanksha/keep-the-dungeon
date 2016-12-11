@@ -15,6 +15,8 @@ public class AnimationActor extends BaseActor {
     public void setAnimation(Animation anim) {
         this.anim = anim;
         stateTime = 0;
+
+        setRegion(anim == null? null: anim.getKeyFrame(0));
     }
 
     @Override

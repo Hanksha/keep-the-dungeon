@@ -64,6 +64,45 @@ public class AnimationSystem extends IteratingSystem {
 
         anim = new Animation(0.08f, atlas.findRegions("player/player-walk-right"), Animation.PlayMode.LOOP);
         animations.put("player-walk-left", anim);
+
+        // moblin javeliner idle
+        anim = new Animation(0.4f, atlas.findRegions("enemies/moblin-idle-down"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-idle-down", anim);
+
+        anim = new Animation(0.4f, atlas.findRegions("enemies/moblin-idle-up"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-idle-up", anim);
+
+        anim = new Animation(0.4f, atlas.findRegions("enemies/moblin-idle-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-idle-right", anim);
+
+        anim = new Animation(0.4f, atlas.findRegions("enemies/moblin-idle-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-idle-left", anim);
+
+        // moblin javeliner walk
+        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-walk-down"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-walk-down", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-walk-up"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-walk-up", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-walk-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-walk-right", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-walk-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-walk-left", anim);
+
+        // moblin javeliner throw
+        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-throw-down"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-throw-down", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-throw-up"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-throw-up", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-throw-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-throw-right", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-throw-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-javeliner-throw-left", anim);
     }
 
     @Override
@@ -81,9 +120,9 @@ public class AnimationSystem extends IteratingSystem {
             actor.setAnimation(animation);
 
             if(animComp.direction == AnimationComponent.Direction.LEFT)
-                actor.setScaleX(-1);
+                actor.setFlipX(true);
             else
-                actor.setScaleX(1);
+                actor.setFlipX(false);
         }
     }
 }

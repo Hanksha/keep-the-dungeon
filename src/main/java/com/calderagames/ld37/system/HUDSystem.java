@@ -101,8 +101,6 @@ public class HUDSystem extends BaseSystem implements SystemEventListener {
 
         reloadBarBgImg.setVisible(playerSystem.getShootCooldown() < 1f);
         reloadBarBgImg.setDrawable(reloadBarBgs[playerSystem.getCurrentArrowType()]);
-
-
     }
 
     private void setHealth() {
