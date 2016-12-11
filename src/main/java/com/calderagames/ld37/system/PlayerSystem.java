@@ -43,7 +43,7 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
     private int playerId;
 
     private float arrowSpeed = 600;
-    private float shootRateTime = 0.5f;
+    private float shootRateTime = 0.6f;
     private float shootCooldown = 0;
 
     @Override

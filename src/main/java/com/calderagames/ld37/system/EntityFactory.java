@@ -97,7 +97,7 @@ public class EntityFactory extends PassiveSystem {
 
                 // set movement stuff
                 MoveComponent moveComp = moveMapper.get(id);
-                moveComp.xAcc = moveComp.yAcc = 1200;
+                moveComp.xAcc = moveComp.yAcc = 1000;
 
                 // set health
                 HealthComponent healthComp = healthMapper.get(id);
