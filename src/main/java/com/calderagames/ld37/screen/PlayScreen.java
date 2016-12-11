@@ -8,6 +8,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.calderagames.ld37.system.*;
@@ -41,6 +42,7 @@ public class PlayScreen extends ScreenAdapter {
                 .with(new EntityFactory())
                 .with(new EventSystem())
                 .with(new PlayerSystem())
+                .with(new EnemySystem())
                 .with(new MoveSystem())
                 .with(new PhysicsSystem())
                 .with(new CollisionSystem())
@@ -55,6 +57,7 @@ public class PlayScreen extends ScreenAdapter {
                 .register(stage)
                 .register(batch)
                 .register("camera", camera)
+                .register(assets.get("textures/textures.atlas", TextureAtlas.class))
                 .register(assets);
         world = new World(config);
 

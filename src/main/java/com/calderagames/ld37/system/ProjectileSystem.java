@@ -22,11 +22,13 @@ public class ProjectileSystem extends BaseSystem {
     private EventSystem eventSystem;
     private GroupManager groupManager;
     private EntityFactory entityFactory;
+    private PlayerSystem playerSystem;
     private ComponentMapper<ActorComponent> actorMapper;
     private ComponentMapper<EnemyComponent> enemyMapper;
 
     @Override
     protected void processSystem() {
+        Actor playerActor = playerSystem.getActor();
 
         Actor projActor;
 
@@ -45,6 +47,7 @@ public class ProjectileSystem extends BaseSystem {
                 entityFactory.removeEntity(id);
         }
 
+        // check player projectiles
         projectiles = groupManager.getEntities("player-arrows");
 
         EnemyComponent enemyComp;
@@ -71,6 +74,22 @@ public class ProjectileSystem extends BaseSystem {
             }
         }
 
+        // check enemy projectiles
+        projectiles = groupManager.getEntities("enemy-projectiles");
+
+        for(int i = 0, id; i < projectiles.size(); i++) {
+            id = projectiles.get(i);
+
+            if(!actorMapper.has(id))
+                continue;
+
+            projActor = actorMapper.get(id).actor;
+
+            if(playerActor.hit(projActor.getX(), projActor.getY(), true) != null) {
+                eventSystem.send(new HitEvent(playerSystem.getPlayerId(), id, 1));
+                entityFactory.removeEntity(id);
+            }
+        }
     }
 
     private boolean isTypeMatchArrow(int type, Actor arrowActor) {

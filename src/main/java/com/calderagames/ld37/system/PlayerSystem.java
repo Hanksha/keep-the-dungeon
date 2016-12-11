@@ -6,6 +6,7 @@ import com.artemis.annotations.Wire;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -29,6 +30,9 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
 
     @Wire(name = "camera")
     private Camera camera;
+
+    @Wire
+    private TextureAtlas atlas;
 
     @Wire
     private Stage stage;
@@ -66,7 +70,7 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
     protected void processSystem() {
         processAim();
         processAnim();
-        shootCooldown += world.delta;
+        processCooldown();
     }
 
     private void processAim() {
@@ -114,6 +118,19 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
             crossbowActor.setZIndex(0);
     }
 
+    private void processCooldown() {
+        if(shootCooldown < shootRateTime) {
+            shootCooldown += world.delta;
+
+            if(shootCooldown >= shootRateTime) {
+                Group playerActor = (Group) actorMapper.get(playerId).actor;
+                BaseActor crossbowActor = playerActor.findActor("crossbow");
+                crossbowActor.setRegion(atlas.findRegion("crossbow", 1));
+            }
+        }
+
+    }
+
     private void fireArrow() {
         if(shootCooldown < shootRateTime)
             return;
@@ -122,6 +139,7 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
 
         Group playerActor = (Group) actorMapper.get(playerId).actor;
         BaseActor crossbowActor = playerActor.findActor("crossbow");
+        crossbowActor.setRegion(atlas.findRegion("crossbow", 2));
         Vector2 pos = crossbowActor.localToStageCoordinates(new Vector2(crossbowActor.getOriginX(), 5));
         int id = entityFactory.fireProjectile(arrowTypes[currentArrowType], pos.x, pos.y, crossbowActor.getRotation(), arrowSpeed);
         groupManager.addTo("player-arrows", id);

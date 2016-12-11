@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Align;
 import com.calderagames.ld37.actor.AnimationActor;
 import com.calderagames.ld37.actor.BaseActor;
+import com.calderagames.ld37.actor.EnemyActor;
 import com.calderagames.ld37.system.component.*;
 
 import java.util.HashMap;
@@ -97,6 +98,7 @@ public class EntityFactory extends PassiveSystem {
         archetypes.put("arrow-red", archetype);
         archetypes.put("arrow-blue", archetype);
         archetypes.put("arrow-yellow", archetype);
+        archetypes.put("javelin", archetype);
     }
 
     public int makeEntity(String name) {
@@ -108,8 +110,8 @@ public class EntityFactory extends PassiveSystem {
         else if(name.contains("enemy")) {
             makeEnemy(id, name);
         }
-        else if(name.startsWith("arrow")) {
-            makeArrow(id, name);
+        else if(name.startsWith("arrow") || name.equals("javelin")) {
+            makeProjectile(id, name);
         }
 
         return id;
@@ -191,7 +193,7 @@ public class EntityFactory extends PassiveSystem {
         animComp.direction = AnimationComponent.Direction.DOWN;
 
         ActorComponent actorComp = actorMapper.get(id);
-        Group parentActor = new Group();
+        EnemyActor parentActor = new EnemyActor();
         parentActor.setUserObject(id);
         parentActor.setName(name);
         parentActor.setTouchable(Touchable.childrenOnly);
@@ -211,7 +213,7 @@ public class EntityFactory extends PassiveSystem {
             makeJaveliner(id, parentActor);
     }
 
-    private void makeJaveliner(int id, Group parentActor) {
+    private void makeJaveliner(int id, EnemyActor parentActor) {
         AnimationActor bodyActor = new AnimationActor(null);
         bodyActor.setPosition(0, 0, Align.center | Align.bottom);
         bodyActor.setTouchable(Touchable.disabled);
@@ -220,7 +222,7 @@ public class EntityFactory extends PassiveSystem {
         parentActor.addActor(bodyActor);
     }
 
-    private void makeArrow(int id, String name) {
+    private void makeProjectile(int id, String name) {
         ActorComponent actorComp = actorMapper.get(id);
         BaseActor actor = new BaseActor(atlas.findRegion(name));
         actor.setUserObject(id);

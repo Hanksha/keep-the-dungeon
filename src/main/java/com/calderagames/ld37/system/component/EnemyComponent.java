@@ -9,9 +9,11 @@ public class EnemyComponent extends PooledComponent {
     public static final int TYPE_RED = 2;
 
     public int type;
+    public float brainCooldown;
 
     @Override
     protected void reset() {
         type = -1;
+        brainCooldown = 0;
     }
 }
