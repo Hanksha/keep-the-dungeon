@@ -3,8 +3,13 @@ package com.calderagames.ld37.system;
 import com.artemis.BaseSystem;
 import com.artemis.ComponentMapper;
 import com.artemis.utils.IntBag;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Align;
+import com.calderagames.ld37.actor.CollisionActor;
 import com.calderagames.ld37.system.component.ActorComponent;
 import com.calderagames.ld37.system.component.EnemyComponent;
 import com.calderagames.ld37.system.event.HitEvent;
@@ -28,9 +33,10 @@ public class ProjectileSystem extends BaseSystem {
 
     @Override
     protected void processSystem() {
-        Actor playerActor = playerSystem.getActor();
+        CollisionActor playerActor = playerSystem.getActor().findActor("collision");
+        Polygon playerPoly = playerActor.getBounds();
 
-        Actor projActor;
+        Group projActor;
 
         // check projectile out of room
         IntBag projectiles = groupManager.getEntities("projectiles");
@@ -41,15 +47,15 @@ public class ProjectileSystem extends BaseSystem {
             if(!actorMapper.has(id))
                 continue;
 
-            projActor = actorMapper.get(id).actor;
+            projActor = (Group) actorMapper.get(id).actor;
 
-            if(isOutStage(projActor))
-                entityFactory.removeEntity(id);
+            /*if(isOutStage(projActor))
+                entityFactory.removeEntity(id);*/
         }
 
         // check player projectiles
         projectiles = groupManager.getEntities("player-arrows");
-
+        IntBag enemies = groupManager.getEntities("enemies");
         EnemyComponent enemyComp;
 
         for(int i = 0, id; i < projectiles.size(); i++) {
@@ -58,19 +64,25 @@ public class ProjectileSystem extends BaseSystem {
             if(!actorMapper.has(id))
                 continue;
 
-            projActor = actorMapper.get(id).actor;
-            Actor actor = entityFactory.getEnemiesGroup().hit(projActor.getX(Align.center), projActor.getY(Align.center), true);
+            projActor = (Group) actorMapper.get(id).actor;
+            Polygon p1 = ((CollisionActor) projActor.findActor("collision")).getBounds();
 
-            if(actor != null) {
-                entityFactory.removeEntity(id);
-                int targetId = (int) actor.getUserObject();
+            int targetId = checkHit(enemies, p1.getBoundingRectangle());
+
+            if(targetId != -1) {
+
+                if(!enemyMapper.has(targetId))
+                    continue;
 
                 enemyComp = enemyMapper.get(targetId);
 
-                if(isTypeMatchArrow(enemyComp.type, projActor))
+                if(isTypeMatchArrow(enemyComp.type, projActor)) {
                     eventSystem.send(new HitEvent(targetId, id, 1));
+                }
                 else
                     logger.info("wrong arrow type");
+
+                entityFactory.removeEntity(id);
             }
         }
 
@@ -82,10 +94,10 @@ public class ProjectileSystem extends BaseSystem {
 
             if(!actorMapper.has(id))
                 continue;
+            projActor = (Group) actorMapper.get(id).actor;
+            Polygon p1 = ((CollisionActor) projActor.findActor("collision")).getBounds();
 
-            projActor = actorMapper.get(id).actor;
-
-            if(playerActor.hit(projActor.getX(), projActor.getY(), true) != null) {
+            if(p1.getBoundingRectangle().overlaps(playerPoly.getBoundingRectangle())) {
                 eventSystem.send(new HitEvent(playerSystem.getPlayerId(), id, 1));
                 entityFactory.removeEntity(id);
             }
@@ -98,8 +110,43 @@ public class ProjectileSystem extends BaseSystem {
                (type == TYPE_RED && arrowActor.getName().equals("arrow-red"));
     }
 
+    private int checkHit(IntBag entities, Rectangle bounds) {
+        for(int i = 0, id; i < entities.size(); i++) {
+            id = entities.get(i);
+
+            if(!actorMapper.has(id))
+                continue;
+
+            CollisionActor actor = ((Group) actorMapper.get(id).actor).findActor("collision");
+
+            if(actor.getBounds().getBoundingRectangle().overlaps(bounds))
+                return id;
+        }
+
+        return -1;
+    }
+
     private boolean isOutStage(Actor actor) {
-        return actor.getX() < 0 || actor.getX() > NATIVE_WIDTH ||
-                actor.getY() < 0 || actor.getY() > NATIVE_HEIGHT;
+        return (actor.getX(Align.center) < 0 || actor.getX(Align.center) > NATIVE_WIDTH) &&
+                (actor.getY(Align.center) < 0 || actor.getY(Align.center) > NATIVE_HEIGHT);
+    }
+
+    public void drawDebug(ShapeRenderer renderer) {
+        IntBag entities = groupManager.getEntities("projectiles");
+        CollisionActor actor;
+
+        for(int i = 0, id; i < entities.size(); i++) {
+            id = entities.get(i);
+            if(!actorMapper.has(id))
+                continue;
+
+            actor = ((Group) actorMapper.get(id).actor).findActor("collision");
+
+            renderer.polygon(actor.getBounds().getTransformedVertices());
+        }
+
+        actor = playerSystem.getActor().findActor("collision");
+
+        renderer.polygon(actor.getBounds().getTransformedVertices());
     }
 }

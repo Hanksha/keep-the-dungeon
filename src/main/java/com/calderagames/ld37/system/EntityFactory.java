@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Align;
 import com.calderagames.ld37.actor.AnimationActor;
 import com.calderagames.ld37.actor.BaseActor;
+import com.calderagames.ld37.actor.CollisionActor;
 import com.calderagames.ld37.actor.EnemyActor;
 import com.calderagames.ld37.system.component.*;
 
@@ -145,11 +146,11 @@ public class EntityFactory extends PassiveSystem {
         parentActor.setName("player");
         parentActor.setUserObject(id);
         parentActor.setTouchable(Touchable.childrenOnly);
-        playerGroup.addActor(parentActor);
+        stage.addActor(parentActor);
         actorComp.actor = parentActor;
 
-        Actor collisionActor = new Actor();
-        collisionActor.setName("collisionBox");
+        CollisionActor collisionActor = new CollisionActor();
+        collisionActor.setName("collision");
         collisionActor.setUserObject(id);
         collisionActor.setTouchable(Touchable.enabled);
         collisionActor.setSize(collision.width, collision.height);
@@ -190,18 +191,18 @@ public class EntityFactory extends PassiveSystem {
 
         AnimationComponent animComp = animMapper.get(id);
         animComp.anim = name + "-walk";
-        animComp.direction = AnimationComponent.Direction.DOWN;
+        animComp.direction = AnimationComponent.Direction.LEFT;
 
         ActorComponent actorComp = actorMapper.get(id);
         EnemyActor parentActor = new EnemyActor();
         parentActor.setUserObject(id);
         parentActor.setName(name);
         parentActor.setTouchable(Touchable.childrenOnly);
-        enemiesGroup.addActor(parentActor);
+        stage.addActor(parentActor);
         actorComp.actor = parentActor;
 
-        Actor collisionActor = new Actor();
-        collisionActor.setName("collisionBox");
+        CollisionActor collisionActor = new CollisionActor();
+        collisionActor.setName("collision");
         collisionActor.setUserObject(id);
         collisionActor.setTouchable(Touchable.enabled);
         collisionActor.setSize(collision.width, collision.height);
@@ -229,7 +230,16 @@ public class EntityFactory extends PassiveSystem {
         actor.setOrigin(Align.center);
         actor.setName(name);
         actorComp.actor = actor;
-        projectileGroup.addActor(actor);
+        stage.addActor(actor);
+
+        CollisionActor collisionActor = new CollisionActor();
+        collisionActor.setName("collision");
+        collisionActor.setUserObject(id);
+        collisionActor.setTouchable(Touchable.enabled);
+        collisionActor.setSize(6, 6);
+        collisionActor.setPosition(actor.getOriginX(), actor.getHeight());
+        collisionActor.setOrigin(actor.getOriginX(), actor.getOriginY());
+        actor.addActor(collisionActor);
 
         PhysicsComponent physicsComp = physicsMapper.get(id);
         physicsComp.frictionX = 0;
@@ -285,7 +295,6 @@ public class EntityFactory extends PassiveSystem {
         if(actorMapper.has(entityId)) {
             actorMapper.get(entityId).actor.remove();
         }
-        groupManager.removeFromAllGroups(entityId);
         world.delete(entityId);
     }
 

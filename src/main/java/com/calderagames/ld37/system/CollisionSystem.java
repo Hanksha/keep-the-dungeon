@@ -3,8 +3,6 @@ package com.calderagames.ld37.system;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.systems.IteratingSystem;
-import com.artemis.utils.IntBag;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -93,28 +91,5 @@ public class CollisionSystem extends IteratingSystem {
             }
         }
 
-    }
-
-    public void drawDebug(ShapeRenderer renderer) {
-        IntBag entities = getEntityIds();
-        Actor actor;
-        CollisionComponent collision;
-
-        renderer.setColor(1, 0, 0, 0.4f);
-
-
-        for(int i = 0, id; i < entities.size(); i++) {
-            id = entities.get(i);
-            actor = actorMapper.get(id).actor;
-            collision = collisionMapper.get(id);
-            Rectangle bounds = new Rectangle();
-
-            // move x axis first;
-            bounds.x = actor.getX() + collision.offX - collision.width / 2;
-            bounds.y = actor.getY() + collision.offY;
-            bounds.width = collision.width;
-            bounds.height = collision.height;
-            renderer.rect(bounds.x, bounds.y, bounds.width, bounds.height);
-        }
     }
 }

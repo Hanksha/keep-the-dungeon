@@ -74,9 +74,11 @@ public class PlayScreen extends ScreenAdapter {
         world.setDelta(delta);
         world.process();
         stage.draw();
-        /*shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        world.getSystem(CollisionSystem.class).drawDebug(shapeRenderer);
-        shapeRenderer.end();*/
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(1, 0, 0, 0.5f);
+        world.getSystem(ProjectileSystem.class).drawDebug(shapeRenderer);
+        shapeRenderer.end();
     }
 
     @Override

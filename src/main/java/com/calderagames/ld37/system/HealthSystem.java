@@ -55,6 +55,7 @@ public class HealthSystem extends IteratingSystem implements SystemEventListener
         if(healthComp.health <= 0) {
             healthComp.health = 0;
             eventSystem.send(new DeathEvent(id));
+            eventSystem.post(new HealthEvent(id));
         }
         else {
             eventSystem.post(new HealthEvent(id));
