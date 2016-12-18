@@ -62,7 +62,7 @@ public class RoomSystem extends BaseSystem {
         enemySpawnPos = new Vector2(580, 60);
 
         TextureAtlas atlas = assets.get("textures/textures.atlas");
-        enemyGateOpened = atlas.createSprite("grill-opened");
+        enemyGateOpened = atlas.createSprite("grill-opened2");
         enemyGateOpened.setPosition(560, 0);
 
         exitGateClosed = atlas.createSprite("gate-closed");

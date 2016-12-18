@@ -35,6 +35,8 @@ public class PlayScreen extends ScreenAdapter {
 
     private ShapeRenderer shapeRenderer;
 
+    private boolean debug;
+
     @Override
     public void show() {
         WorldConfiguration config = new WorldConfigurationBuilder()
@@ -47,6 +49,7 @@ public class PlayScreen extends ScreenAdapter {
                 .with(new PhysicsSystem())
                 .with(new CollisionSystem())
                 .with(new PostPhysicsSystem())
+                .with(new ActorSystem())
                 .with(new AnimationSystem())
                 .with(new HealthSystem())
                 .with(new ProjectileSystem())
@@ -54,6 +57,7 @@ public class PlayScreen extends ScreenAdapter {
                 .with(new HUDSystem())
                 .with(new DeathSystem())
                 .build()
+                .register(this)
                 .register(stage)
                 .register(batch)
                 .register("camera", camera)
@@ -73,12 +77,20 @@ public class PlayScreen extends ScreenAdapter {
         stage.act(delta);
         world.setDelta(delta);
         world.process();
+        stage.getActors().sort((o1, o2) -> (int) (o2.getY() - o1.getY()));
         stage.draw();
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(1, 0, 0, 0.5f);
-        world.getSystem(ProjectileSystem.class).drawDebug(shapeRenderer);
-        shapeRenderer.end();
+        if(debug)
+            world.getSystem(CollisionSystem.class).renderDebug(shapeRenderer);
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+        stage.setDebugAll(debug);
+    }
+
+    public boolean getDebug() {
+        return debug;
     }
 
     @Override

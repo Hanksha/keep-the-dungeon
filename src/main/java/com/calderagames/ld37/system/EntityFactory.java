@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Align;
 import com.calderagames.ld37.actor.AnimationActor;
 import com.calderagames.ld37.actor.BaseActor;
-import com.calderagames.ld37.actor.CollisionActor;
 import com.calderagames.ld37.actor.EnemyActor;
 import com.calderagames.ld37.system.component.*;
 
@@ -27,6 +26,7 @@ public class EntityFactory extends PassiveSystem {
 
     private HashMap<String, Archetype> archetypes;
     private ComponentMapper<HealthComponent> healthMapper;
+    private ComponentMapper<PositionComponent> posMapper;
     private ComponentMapper<ActorComponent> actorMapper;
     private ComponentMapper<MoveComponent> moveMapper;
     private ComponentMapper<PhysicsComponent> physicsMapper;
@@ -69,10 +69,11 @@ public class EntityFactory extends PassiveSystem {
 
     private void setUpArchetypes() {
         Archetype archetype = new ArchetypeBuilder()
-                .add(ActorComponent.class)
+                .add(PositionComponent.class)
                 .add(PhysicsComponent.class)
                 .add(CollisionComponent.class)
                 .add(MoveComponent.class)
+                .add(ActorComponent.class)
                 .add(HealthComponent.class)
                 .add(AnimationComponent.class)
                 .build(world);
@@ -87,14 +88,16 @@ public class EntityFactory extends PassiveSystem {
                 .add(EnemyComponent.class)
                 .build(world);
         archetypes.put("enemy", archetype);
-        
+
         archetype = new ArchetypeBuilder(archetypes.get("enemy"))
                 .build(world);
         archetypes.put("enemy-javeliner", archetype);
 
         archetype = new ArchetypeBuilder()
-                .add(ActorComponent.class)
+                .add(PositionComponent.class)
                 .add(PhysicsComponent.class)
+                .add(CollisionComponent.class)
+                .add(ActorComponent.class)
                 .build(world);
         archetypes.put("arrow-red", archetype);
         archetypes.put("arrow-blue", archetype);
@@ -133,8 +136,6 @@ public class EntityFactory extends PassiveSystem {
         CollisionComponent collision = collisionMapper.get(id);
         collision.width = 12;
         collision.height = 11;
-        collision.offX = 0;
-        collision.offY = 5;
 
         AnimationComponent animComp = animMapper.get(id);
         animComp.anim = "player-idle";
@@ -142,34 +143,22 @@ public class EntityFactory extends PassiveSystem {
 
         // set actors
         ActorComponent actorComp = actorMapper.get(id);
+
         Group parentActor = new Group();
-        parentActor.setName("player");
         parentActor.setUserObject(id);
-        parentActor.setTouchable(Touchable.childrenOnly);
         stage.addActor(parentActor);
         actorComp.actor = parentActor;
-
-        CollisionActor collisionActor = new CollisionActor();
-        collisionActor.setName("collision");
-        collisionActor.setUserObject(id);
-        collisionActor.setTouchable(Touchable.enabled);
-        collisionActor.setSize(collision.width, collision.height);
-        collisionActor.setPosition(collision.offX, collision.offY, Align.center | Align.bottom);
-        collisionActor.setOrigin(Align.center | Align.bottom);
-        parentActor.addActor(collisionActor);
 
         AnimationActor bodyActor = new AnimationActor(null);
         bodyActor.setPosition(0, 0, Align.center | Align.bottom);
         bodyActor.setOrigin(Align.center | Align.bottom);
         bodyActor.setName("body");
-        bodyActor.setTouchable(Touchable.disabled);
         parentActor.addActor(bodyActor);
 
         BaseActor crossbowActor = new BaseActor(atlas.findRegion("crossbow", 1));
         crossbowActor.setPosition(0, 13, Align.center | Align.bottom);
         crossbowActor.setOrigin(Align.center | Align.bottom);
         crossbowActor.setName("crossbow");
-        crossbowActor.setTouchable(Touchable.disabled);
         parentActor.addActor(crossbowActor);
     }
 
@@ -191,55 +180,47 @@ public class EntityFactory extends PassiveSystem {
 
         AnimationComponent animComp = animMapper.get(id);
         animComp.anim = name + "-walk";
-        animComp.direction = AnimationComponent.Direction.LEFT;
+        animComp.direction = AnimationComponent.Direction.DOWN;
 
         ActorComponent actorComp = actorMapper.get(id);
-        EnemyActor parentActor = new EnemyActor();
-        parentActor.setUserObject(id);
-        parentActor.setName(name);
-        parentActor.setTouchable(Touchable.childrenOnly);
-        stage.addActor(parentActor);
+        Group parentActor = new Group();
         actorComp.actor = parentActor;
+        stage.addActor(parentActor);
 
-        CollisionActor collisionActor = new CollisionActor();
-        collisionActor.setName("collision");
-        collisionActor.setUserObject(id);
-        collisionActor.setTouchable(Touchable.enabled);
-        collisionActor.setSize(collision.width, collision.height);
-        collisionActor.setPosition(collision.offX, collision.offY, Align.center | Align.bottom);
-        collisionActor.setOrigin(Align.center | Align.bottom);
-        parentActor.addActor(collisionActor);
+        EnemyActor bodyActor = new EnemyActor();
+        bodyActor.setUserObject(id);
+        bodyActor.setName(name);
 
         if(name.contains("javeliner"))
             makeJaveliner(id, parentActor);
     }
 
-    private void makeJaveliner(int id, EnemyActor parentActor) {
+    private void makeJaveliner(int id, Group parentActor) {
         AnimationActor bodyActor = new AnimationActor(null);
         bodyActor.setPosition(0, 0, Align.center | Align.bottom);
-        bodyActor.setTouchable(Touchable.disabled);
         bodyActor.setOrigin(Align.center | Align.bottom);
         bodyActor.setName("body");
         parentActor.addActor(bodyActor);
     }
 
     private void makeProjectile(int id, String name) {
-        ActorComponent actorComp = actorMapper.get(id);
-        BaseActor actor = new BaseActor(atlas.findRegion(name));
-        actor.setUserObject(id);
-        actor.setOrigin(Align.center);
-        actor.setName(name);
-        actorComp.actor = actor;
-        stage.addActor(actor);
+        CollisionComponent collision = collisionMapper.get(id);
+        collision.width = 6;
+        collision.height = 6;
+        collision.offY = -collision.height / 2;
+        collision.enabled = false;
 
-        CollisionActor collisionActor = new CollisionActor();
-        collisionActor.setName("collision");
-        collisionActor.setUserObject(id);
-        collisionActor.setTouchable(Touchable.enabled);
-        collisionActor.setSize(6, 6);
-        collisionActor.setPosition(actor.getOriginX(), actor.getHeight());
-        collisionActor.setOrigin(actor.getOriginX(), actor.getOriginY());
-        actor.addActor(collisionActor);
+        ActorComponent actorComp = actorMapper.get(id);
+
+        BaseActor actor = new BaseActor(atlas.findRegion(name));
+        actorComp.alignX = actor.getWidth() / 2;
+        actorComp.alignY = actor.getHeight() - collision.height;
+        actor.setUserObject(id);
+        actor.setOrigin(actorComp.alignX, actorComp.alignY);
+        actor.setName(name);
+        stage.addActor(actor);
+        actorComp.actor = actor;
+
 
         PhysicsComponent physicsComp = physicsMapper.get(id);
         physicsComp.frictionX = 0;
@@ -249,8 +230,14 @@ public class EntityFactory extends PassiveSystem {
 
     public int makeEntity(String name, float x, float y) {
         int id = makeEntity(name);
-        ActorComponent actor = actorMapper.get(id);
-        actor.actor.setPosition(x, y, Align.center);
+        PositionComponent pos = posMapper.get(id);
+        pos.x = x;
+        pos.y = y;
+
+        if(actorMapper.has(id)) {
+            ActorComponent actorComp = actorMapper.get(id);
+            actorComp.actor.setPosition(pos.x - actorComp.alignX, pos.y - actorComp.alignY);
+        }
         return id;
     }
 
@@ -295,6 +282,7 @@ public class EntityFactory extends PassiveSystem {
         if(actorMapper.has(entityId)) {
             actorMapper.get(entityId).actor.remove();
         }
+        groupManager.removeFromAllGroups(entityId);
         world.delete(entityId);
     }
 

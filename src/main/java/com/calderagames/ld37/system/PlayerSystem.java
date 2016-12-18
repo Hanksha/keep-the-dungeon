@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.calderagames.ld37.actor.BaseActor;
+import com.calderagames.ld37.screen.PlayScreen;
 import com.calderagames.ld37.system.component.ActorComponent;
 import com.calderagames.ld37.system.component.AnimationComponent;
 import com.calderagames.ld37.system.component.MoveComponent;
@@ -35,8 +35,7 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
     private TextureAtlas atlas;
 
     @Wire
-    private Stage stage;
-    private boolean debug;
+    PlayScreen playScreen;
 
     private EntityFactory entityFactory;
     private GroupManager groupManager;
@@ -210,7 +209,7 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
                 move.down = false;
                 break;
             case F4:
-                stage.setDebugAll(debug = !debug);
+                playScreen.setDebug(!playScreen.getDebug());
             default: break;
         }
         return false;

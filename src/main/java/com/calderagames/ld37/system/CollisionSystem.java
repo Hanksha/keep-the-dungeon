@@ -3,12 +3,13 @@ package com.calderagames.ld37.system;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.systems.IteratingSystem;
+import com.artemis.utils.IntBag;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.calderagames.ld37.system.component.ActorComponent;
 import com.calderagames.ld37.system.component.CollisionComponent;
 import com.calderagames.ld37.system.component.PhysicsComponent;
+import com.calderagames.ld37.system.component.PositionComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,26 +19,27 @@ public class CollisionSystem extends IteratingSystem {
 
     private static final Logger logger = LogManager.getLogger();
 
+    public boolean debug;
+
     private RoomSystem roomSystem;
-    private ComponentMapper<ActorComponent> actorMapper;
+    private ComponentMapper<PositionComponent> posMapper;
     private ComponentMapper<PhysicsComponent> physicsMapper;
     private ComponentMapper<CollisionComponent> collisionMapper;
 
     public CollisionSystem() {
-        super(Aspect.all(PhysicsComponent.class, ActorComponent.class, CollisionComponent.class));
+        super(Aspect.all(PhysicsComponent.class, PositionComponent.class, CollisionComponent.class));
     }
 
     @Override
     protected void process(int entityId) {
-        Actor actor = actorMapper.get(entityId).actor;
+        PositionComponent pos = posMapper.get(entityId);
         PhysicsComponent physics = physicsMapper.get(entityId);
         CollisionComponent collision = collisionMapper.get(entityId);
 
-        if(physics.vx == 0 && physics.vy == 0)
+        if(!collision.enabled || (physics.vx == 0 && physics.vy == 0))
             return;
 
-        Vector2 prevPos = new Vector2(actor.getX(), actor.getY());
-        Vector2 nextPos = new Vector2(actor.getX(), actor.getY());
+        Vector2 nextPos = new Vector2(pos.x, pos.y);
         Rectangle bounds = new Rectangle();
         bounds.width = collision.width;
         bounds.height = collision.height;
@@ -63,7 +65,7 @@ public class CollisionSystem extends IteratingSystem {
             }
 
             if(collidedX) {
-                actor.moveBy(nextPos.x - prevPos.x, 0);
+                pos.x = nextPos.x;
                 physics.vx = 0;
             }
         }
@@ -86,10 +88,46 @@ public class CollisionSystem extends IteratingSystem {
             }
 
             if(collidedY) {
-              actor.moveBy(0, nextPos.y - prevPos.y);
+              pos.y = nextPos.y;
               physics.vy = 0;
             }
         }
 
+    }
+
+    public Rectangle getBounds(int entityId) {
+        if(!collisionMapper.has(entityId) || !posMapper.has(entityId))
+            return null;
+
+        PositionComponent pos = posMapper.get(entityId);
+        CollisionComponent collision = collisionMapper.get(entityId);
+        return new Rectangle(pos.x + collision.offX - collision.width / 2, pos.y + collision.offY,
+                             collision.width, collision.height);
+    }
+
+    public boolean isOverlap(int entityIdA, int entityIdB) {
+        Rectangle rectA = getBounds(entityIdA);
+        Rectangle rectB = getBounds(entityIdB);
+
+        if(rectA == null || rectB == null)
+            return false;
+
+        return rectA.overlaps(rectB);
+    }
+
+    public void renderDebug(ShapeRenderer renderer) {
+        IntBag entities = getEntityIds();
+
+        renderer.begin(ShapeRenderer.ShapeType.Line);
+        renderer.setColor(1f, 0f, 0f, 0.5f);
+        for(int i = 0, id; i < entities.size(); i++) {
+            id = entities.get(i);
+            CollisionComponent collision = collisionMapper.get(id);
+            PositionComponent pos = posMapper.get(id);
+            renderer.rect(pos.x + collision.offX - collision.width / 2,
+                          pos.y + collision.offY,
+                          collision.width, collision.height);
+        }
+        renderer.end();
     }
 }

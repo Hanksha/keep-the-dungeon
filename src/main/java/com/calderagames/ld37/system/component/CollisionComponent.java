@@ -8,6 +8,7 @@ public class CollisionComponent extends PooledComponent {
     public int height;
     public int offX;
     public int offY;
+    public boolean enabled = true;
 
     @Override
     protected void reset() {
@@ -15,5 +16,6 @@ public class CollisionComponent extends PooledComponent {
         height = 0;
         offX = 0;
         offY = 0;
+        enabled = true;
     }
 }
