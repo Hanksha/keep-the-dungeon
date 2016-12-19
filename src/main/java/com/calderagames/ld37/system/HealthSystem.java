@@ -3,6 +3,9 @@ package com.calderagames.ld37.system;
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;
 import com.artemis.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.Color;
+import com.calderagames.ld37.actor.ColorFlickerAction;
+import com.calderagames.ld37.system.component.ActorComponent;
 import com.calderagames.ld37.system.component.HealthComponent;
 import com.calderagames.ld37.system.event.*;
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +17,9 @@ public class HealthSystem extends IteratingSystem implements SystemEventListener
 
     private EventSystem eventSystem;
     private ComponentMapper<HealthComponent> healthMapper;
+    private ComponentMapper<ActorComponent> actorMapper;
+
+    private final Color flickerColor = new Color(1f, 1f, 1f, 0.4f);
 
     public HealthSystem() {
         super(Aspect.all(HealthComponent.class));
@@ -49,6 +55,8 @@ public class HealthSystem extends IteratingSystem implements SystemEventListener
         if(healthComp.immunityCooldown < healthComp.immunitySpan)
             return;
 
+        setFlicker(id, healthComp.immunitySpan);
+
         healthComp.health -= damage;
         healthComp.immunityCooldown = 0;
 
@@ -59,6 +67,13 @@ public class HealthSystem extends IteratingSystem implements SystemEventListener
         }
         else {
             eventSystem.post(new HealthEvent(id));
+        }
+    }
+
+    private void setFlicker(int id, float duration) {
+        if(actorMapper.has(id)) {
+            actorMapper.get(id).actor
+                    .addAction(new ColorFlickerAction(Color.WHITE, flickerColor, duration, 0.1f));
         }
     }
 }

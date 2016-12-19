@@ -149,6 +149,12 @@ public class EntityFactory extends PassiveSystem {
         stage.addActor(parentActor);
         actorComp.actor = parentActor;
 
+        BaseActor shadowActor = new BaseActor(atlas.findRegion("player/shadow"));
+        shadowActor.setPosition(0, 6, Align.center);
+        shadowActor.setOrigin(Align.center);
+        shadowActor.setName("shadow");
+        parentActor.addActor(shadowActor);
+
         AnimationActor bodyActor = new AnimationActor(null);
         bodyActor.setPosition(0, 0, Align.center | Align.bottom);
         bodyActor.setOrigin(Align.center | Align.bottom);
