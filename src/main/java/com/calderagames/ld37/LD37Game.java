@@ -6,7 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -72,6 +72,17 @@ public class LD37Game extends Game {
     }
 
     private void loadAssets() {
+        loadFonts();
+        loadTextures();
+        loadAudio();
+
+        assets.finishLoading();
+
+        Cursor cursor = Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("cursor.png")), 32, 32);
+        Gdx.graphics.setCursor(cursor);
+    }
+
+    private void loadFonts() {
         // load fonts
         assets.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(new InternalFileHandleResolver()));
         assets.setLoader(BitmapFont.class, new FreetypeFontLoader(new InternalFileHandleResolver()));
@@ -82,14 +93,24 @@ public class LD37Game extends Game {
                 .setBorderWidth(1)
                 .setTextureFilter(Texture.TextureFilter.Nearest)
                 .build());
+    }
 
+    private void loadTextures() {
         // load texture atlas
         assets.load("textures/textures.atlas", TextureAtlas.class);
+    }
 
-        assets.finishLoading();
-
-        Cursor cursor = Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("cursor.png")), 32, 32);
-        Gdx.graphics.setCursor(cursor);
+    private void loadAudio() {
+        assets.load("audio/effects/break.ogg", Sound.class);
+        assets.load("audio/effects/death.ogg", Sound.class);
+        assets.load("audio/effects/door.ogg", Sound.class);
+        assets.load("audio/effects/heal.ogg", Sound.class);
+        assets.load("audio/effects/hit.ogg", Sound.class);
+        assets.load("audio/effects/resist.ogg", Sound.class);
+        assets.load("audio/effects/select.ogg", Sound.class);
+        assets.load("audio/effects/selectdone.ogg", Sound.class);
+        assets.load("audio/effects/shoot.ogg", Sound.class);
+        assets.load("audio/effects/slash.ogg", Sound.class);
     }
 
     @Override

@@ -60,11 +60,13 @@ public class PlayScreen extends ScreenAdapter {
                 .with(new RoomSystem())
                 .with(new HUDSystem())
                 .with(new DeathSystem())
+                .with(new AudioSystem())
                 .build()
                 .register(this)
                 .register(stage)
                 .register(batch)
                 .register("camera", camera)
+                .register("audio", audio)
                 .register(assets.get("textures/textures.atlas", TextureAtlas.class))
                 .register(assets);
         world = new World(config);
