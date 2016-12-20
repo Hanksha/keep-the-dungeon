@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.calderagames.ld37.audio.AudioManager;
 import com.calderagames.ld37.screen.PlayScreen;
 import com.calderagames.ld37.utils.FontUtils;
 import com.google.inject.Guice;
@@ -34,6 +36,9 @@ public class LD37Game extends Game {
     private static final Logger logger = LogManager.getLogger();
 
     private Injector injector;
+
+    @Inject
+    AudioManager audio;
 
     @Inject
     private Viewport viewport;
@@ -95,9 +100,13 @@ public class LD37Game extends Game {
 
     @Override
     public void render() {
+        assets.update();
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         batch.setProjectionMatrix(viewport.getCamera().combined);
+
+        audio.update(Gdx.graphics.getDeltaTime());
 
         if(screen != null)
             screen.render(Gdx.graphics.getDeltaTime());

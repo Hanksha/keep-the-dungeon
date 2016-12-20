@@ -11,12 +11,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.calderagames.ld37.audio.AudioManager;
 import com.calderagames.ld37.system.*;
 import com.google.inject.Inject;
 
 public class PlayScreen extends ScreenAdapter {
 
     private World world;
+
+    @Inject
+    private AudioManager audio;
 
     @Inject
     private Stage stage;
@@ -69,6 +73,8 @@ public class PlayScreen extends ScreenAdapter {
 //        stage.setDebugAll(true);
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
+
+        audio.playMusic("loop.ogg", true);
     }
 
     @Override

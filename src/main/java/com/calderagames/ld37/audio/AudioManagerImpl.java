@@ -25,8 +25,8 @@ public class AudioManagerImpl implements AudioManager {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private final String soundEffectsFolder = "sounds/effects/";
-    private final String musicFolder = "sounds/music/";
+    private final String soundEffectsFolder = "audio/effects/";
+    private final String musicFolder = "audio/music/";
 
     private float effectsVol = 1;
     private float musicVol = 1;
