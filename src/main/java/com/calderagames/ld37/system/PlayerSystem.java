@@ -112,9 +112,9 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
         BaseActor crossbowActor = ((Group) actorMapper.get(playerId).actor).findActor("crossbow");
 
         if(animComp.direction == AnimationComponent.Direction.DOWN)
-            crossbowActor.setZIndex(10);
+            crossbowActor.setZIndex(2);
         else
-            crossbowActor.setZIndex(0);
+            crossbowActor.setZIndex(1);
     }
 
     private void processCooldown() {
