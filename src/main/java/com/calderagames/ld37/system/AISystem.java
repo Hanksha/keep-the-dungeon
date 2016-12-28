@@ -39,10 +39,8 @@ public class AISystem extends IteratingSystem {
 
         aiComp.entity.update(aiComp, pos, physics);
         aiComp.steeringBehavior.calculateSteering(steertingOuput);
-        physics.vx = steertingOuput.linear.x;
-        physics.vy = steertingOuput.linear.y;
-
-        logger.info(steertingOuput.linear.toString());
+        physics.vx += steertingOuput.linear.x * world.delta;
+        physics.vy += steertingOuput.linear.y * world.delta;
     }
 
 }

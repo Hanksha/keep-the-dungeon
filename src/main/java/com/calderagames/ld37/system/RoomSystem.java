@@ -17,15 +17,11 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.calderagames.ld37.LD37Game;
 import com.calderagames.ld37.system.component.AIComponent;
 import com.calderagames.ld37.system.component.ActorComponent;
-import com.calderagames.ld37.utils.ActionUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -97,7 +93,6 @@ public class RoomSystem extends BaseSystem {
 
         AIComponent aiComp = AIMapper.get(id);
 
-
         Array<Vector2> wayPoints = new Array<>();
         wayPoints.add(new Vector2(580, 60));
         wayPoints.add(new Vector2(580, 300));
@@ -107,20 +102,8 @@ public class RoomSystem extends BaseSystem {
 
         LinePath<Vector2> path = new LinePath<>(wayPoints);
 
-        FollowPath<Vector2, LinePath.LinePathParam> followPath = new FollowPath<>(aiComp.entity, path);
-        followPath.setArrivalTolerance(0.005f);
-        followPath.setTimeToTarget(0.1f);
+        FollowPath<Vector2, LinePath.LinePathParam> followPath = new FollowPath<>(aiComp.entity, path, 1);
         aiComp.steeringBehavior = followPath;
-
-        /*SequenceAction sequence =
-                ActionUtils.moveTo(50f, actorMapper.get(id).actor,
-                Actions.moveToAligned(580, 60, Align.center),
-                Actions.moveToAligned(580, 300, Align.center),
-                Actions.moveToAligned(60, 300, Align.center),
-                Actions.moveToAligned(60, 60, Align.center),
-                Actions.moveToAligned(360, 60, Align.center));
-        sequence.addAction(Actions.run(() -> entityFactory.removeEntity(id)));
-        actorMapper.get(id).actor.addAction(sequence);*/
     }
 
     @Override

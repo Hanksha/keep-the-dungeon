@@ -186,6 +186,7 @@ public class EntityFactory extends PassiveSystem {
         collision.height = 18;
         collision.offX = 0;
         collision.offY = 4;
+        collision.enabled = false;
 
         AnimationComponent animComp = animMapper.get(id);
         animComp.anim = name + "-walk";

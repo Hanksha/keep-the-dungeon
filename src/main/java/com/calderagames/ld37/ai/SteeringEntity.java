@@ -9,10 +9,10 @@ import com.calderagames.ld37.system.component.PositionComponent;
 
 public class SteeringEntity  implements Steerable<Vector2> {
 
-    Vector2 position;
-    Vector2 linearVelocity;
-    float angularVelocity;
-    float boundingRadius;
+    private Vector2 position;
+    private Vector2 linearVelocity;
+    private float angularVelocity;
+    private float boundingRadius;
 
     public SteeringEntity() {
         position = new Vector2();
@@ -51,7 +51,7 @@ public class SteeringEntity  implements Steerable<Vector2> {
 
     @Override
     public float getZeroLinearSpeedThreshold() {
-        return 0;
+        return 0.5f;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class SteeringEntity  implements Steerable<Vector2> {
 
     @Override
     public float getMaxLinearSpeed() {
-        return 10000;
+        return 100;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class SteeringEntity  implements Steerable<Vector2> {
 
     @Override
     public float getMaxLinearAcceleration() {
-        return 10000;
+        return 400;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class SteeringEntity  implements Steerable<Vector2> {
 
     @Override
     public float getMaxAngularSpeed() {
-        return 0;
+        return 5;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class SteeringEntity  implements Steerable<Vector2> {
 
     @Override
     public float getMaxAngularAcceleration() {
-        return 50;
+        return 10;
     }
 
     @Override
@@ -101,7 +101,6 @@ public class SteeringEntity  implements Steerable<Vector2> {
 
     @Override
     public Vector2 getPosition() {
-        System.out.println("SteeringEntity.getPosition");
         return position;
     }
 
