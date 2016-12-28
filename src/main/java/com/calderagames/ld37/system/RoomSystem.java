@@ -3,6 +3,8 @@ package com.calderagames.ld37.system;
 import com.artemis.BaseSystem;
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.Wire;
+import com.badlogic.gdx.ai.steer.behaviors.FollowPath;
+import com.badlogic.gdx.ai.steer.utils.paths.LinePath;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,8 +20,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.calderagames.ld37.LD37Game;
+import com.calderagames.ld37.system.component.AIComponent;
 import com.calderagames.ld37.system.component.ActorComponent;
 import com.calderagames.ld37.utils.ActionUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -37,7 +41,9 @@ public class RoomSystem extends BaseSystem {
     private TmxMapLoader mapLoader;
     private OrthogonalTiledMapRenderer renderer;
     private TiledMap room;
+
     private ComponentMapper<ActorComponent> actorMapper;
+    private ComponentMapper<AIComponent> AIMapper;
 
     private Vector2 enemySpawnPos;
 
@@ -88,7 +94,25 @@ public class RoomSystem extends BaseSystem {
 
     private void popEnemy() {
         int id = entityFactory.makeEnemy("enemy-javeliner", RandomUtils.nextInt(0, 3), enemySpawnPos.x, enemySpawnPos.y);
-        SequenceAction sequence =
+
+        AIComponent aiComp = AIMapper.get(id);
+
+
+        Array<Vector2> wayPoints = new Array<>();
+        wayPoints.add(new Vector2(580, 60));
+        wayPoints.add(new Vector2(580, 300));
+        wayPoints.add(new Vector2(60, 300));
+        wayPoints.add(new Vector2(60, 60));
+        wayPoints.add(new Vector2(360, 60));
+
+        LinePath<Vector2> path = new LinePath<>(wayPoints);
+
+        FollowPath<Vector2, LinePath.LinePathParam> followPath = new FollowPath<>(aiComp.entity, path);
+        followPath.setArrivalTolerance(0.005f);
+        followPath.setTimeToTarget(0.1f);
+        aiComp.steeringBehavior = followPath;
+
+        /*SequenceAction sequence =
                 ActionUtils.moveTo(50f, actorMapper.get(id).actor,
                 Actions.moveToAligned(580, 60, Align.center),
                 Actions.moveToAligned(580, 300, Align.center),
@@ -96,7 +120,7 @@ public class RoomSystem extends BaseSystem {
                 Actions.moveToAligned(60, 60, Align.center),
                 Actions.moveToAligned(360, 60, Align.center));
         sequence.addAction(Actions.run(() -> entityFactory.removeEntity(id)));
-        actorMapper.get(id).actor.addAction(sequence);
+        actorMapper.get(id).actor.addAction(sequence);*/
     }
 
     @Override

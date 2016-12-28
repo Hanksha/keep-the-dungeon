@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import com.calderagames.ld37.actor.AnimationActor;
 import com.calderagames.ld37.actor.BaseActor;
 import com.calderagames.ld37.actor.EnemyActor;
+import com.calderagames.ld37.ai.SteeringEntity;
 import com.calderagames.ld37.system.component.*;
 
 import java.util.HashMap;
@@ -33,6 +34,7 @@ public class EntityFactory extends PassiveSystem {
     private ComponentMapper<CollisionComponent> collisionMapper;
     private ComponentMapper<EnemyComponent> enemyMapper;
     private ComponentMapper<AnimationComponent> animMapper;
+    private ComponentMapper<AIComponent> AIMapper;
 
     @Wire
     private Stage stage;
@@ -86,6 +88,7 @@ public class EntityFactory extends PassiveSystem {
 
         archetype = new ArchetypeBuilder(archetypes.get("basic-entity"))
                 .add(EnemyComponent.class)
+                .add(AIComponent.class)
                 .build(world);
         archetypes.put("enemy", archetype);
 
@@ -196,6 +199,9 @@ public class EntityFactory extends PassiveSystem {
         EnemyActor bodyActor = new EnemyActor();
         bodyActor.setUserObject(id);
         bodyActor.setName(name);
+
+        AIComponent aiComp = AIMapper.get(id);
+        aiComp.entity = new SteeringEntity();
 
         if(name.contains("javeliner"))
             makeJaveliner(id, parentActor);

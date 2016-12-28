@@ -72,6 +72,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-ai</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>net.onedaybeard.artemis</groupId>
             <artifactId>artemis-odb</artifactId>
             <version>1.2.1</version>

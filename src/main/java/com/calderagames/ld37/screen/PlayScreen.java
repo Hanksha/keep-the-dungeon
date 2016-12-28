@@ -50,6 +50,7 @@ public class PlayScreen extends ScreenAdapter {
                 .with(new PlayerSystem())
                 .with(new EnemySystem())
                 .with(new MoveSystem())
+                .with(new AISystem())
                 .with(new PhysicsSystem())
                 .with(new CollisionSystem())
                 .with(new PostPhysicsSystem())
@@ -76,6 +77,7 @@ public class PlayScreen extends ScreenAdapter {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
 
+        audio.setMusicVolume(0.5f);
         audio.playMusic("loop.ogg", true);
     }
 
