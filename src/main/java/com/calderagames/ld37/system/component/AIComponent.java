@@ -8,6 +8,10 @@ import com.calderagames.ld37.ai.SteeringEntity;
 public class AIComponent extends Component {
 
     public SteeringBehavior<Vector2> steeringBehavior;
+
     public SteeringEntity entity;
+
+    public int prevState;
+    public int state;
 
 }

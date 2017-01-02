@@ -472,14 +472,14 @@ enemies/redmoblin-walk-up
   size: 34, 49
   orig: 34, 49
   offset: 0, 0
-  index: 6
+  index: 1
 enemies/redmoblin-walk-up
   rotate: false
   xy: 838, 461
   size: 34, 49
   orig: 34, 49
   offset: 0, 0
-  index: 1
+  index: 6
 enemies/redmoblin-attack-up
   rotate: false
   xy: 329, 404

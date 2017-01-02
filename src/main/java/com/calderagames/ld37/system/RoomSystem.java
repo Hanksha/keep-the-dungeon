@@ -3,8 +3,6 @@ package com.calderagames.ld37.system;
 import com.artemis.BaseSystem;
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.Wire;
-import com.badlogic.gdx.ai.steer.behaviors.FollowPath;
-import com.badlogic.gdx.ai.steer.utils.paths.LinePath;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,7 +15,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.calderagames.ld37.LD37Game;
 import com.calderagames.ld37.system.component.AIComponent;
@@ -90,20 +87,6 @@ public class RoomSystem extends BaseSystem {
 
     private void popEnemy() {
         int id = entityFactory.makeEnemy("enemy-javeliner", RandomUtils.nextInt(0, 3), enemySpawnPos.x, enemySpawnPos.y);
-
-        AIComponent aiComp = AIMapper.get(id);
-
-        Array<Vector2> wayPoints = new Array<>();
-        wayPoints.add(new Vector2(580, 60));
-        wayPoints.add(new Vector2(580, 300));
-        wayPoints.add(new Vector2(60, 300));
-        wayPoints.add(new Vector2(60, 60));
-        wayPoints.add(new Vector2(360, 60));
-
-        LinePath<Vector2> path = new LinePath<>(wayPoints);
-
-        FollowPath<Vector2, LinePath.LinePathParam> followPath = new FollowPath<>(aiComp.entity, path, 1);
-        aiComp.steeringBehavior = followPath;
     }
 
     @Override

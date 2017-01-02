@@ -203,6 +203,7 @@ public class EntityFactory extends PassiveSystem {
 
         AIComponent aiComp = AIMapper.get(id);
         aiComp.entity = new SteeringEntity();
+        aiComp.state = AISystem.STATE_INIT;
 
         if(name.contains("javeliner"))
             makeJaveliner(id, parentActor);
