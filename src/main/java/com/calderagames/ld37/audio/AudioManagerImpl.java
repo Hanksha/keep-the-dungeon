@@ -50,7 +50,6 @@ public class AudioManagerImpl implements AudioManager {
 
     public AudioManagerImpl() {
         soundPool = new SoundInstancePool();
-
         soundIdToInstance = new LongMap<>();
 
         try {

@@ -6,21 +6,21 @@ filter: Nearest,Nearest
 repeat: none
 arrow-blue
   rotate: false
-  xy: 77, 3
+  xy: 302, 165
   size: 7, 19
   orig: 7, 19
   offset: 0, 0
   index: -1
 arrow-red
   rotate: false
-  xy: 571, 394
+  xy: 808, 392
   size: 7, 19
   orig: 7, 19
   offset: 0, 0
   index: -1
 arrow-yellow
   rotate: false
-  xy: 86, 3
+  xy: 817, 392
   size: 7, 19
   orig: 7, 19
   offset: 0, 0
@@ -202,154 +202,154 @@ enemies/moblin-walk-down
   index: 9
 enemies/moblin-walk-down
   rotate: false
-  xy: 850, 417
+  xy: 883, 417
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 2
 enemies/moblin-walk-down
   rotate: false
-  xy: 882, 417
+  xy: 915, 417
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 3
-enemies/moblin-walk-down
-  rotate: false
-  xy: 914, 417
-  size: 30, 42
-  orig: 30, 42
-  offset: 0, 0
-  index: 5
-enemies/moblin-walk-down
-  rotate: false
-  xy: 946, 417
-  size: 30, 42
-  orig: 30, 42
-  offset: 0, 0
-  index: 7
 enemies/moblin-walk-down
   rotate: false
   xy: 268, 232
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
-  index: 8
+  index: 5
 enemies/moblin-walk-down
   rotate: false
   xy: 270, 164
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
-  index: 10
-enemies/moblin-walk-right
+  index: 7
+enemies/moblin-walk-down
+  rotate: false
+  xy: 361, 364
+  size: 30, 42
+  orig: 30, 42
+  offset: 0, 0
+  index: 8
+enemies/moblin-walk-down
   rotate: false
   xy: 284, 120
-  size: 24, 42
-  orig: 24, 42
+  size: 30, 42
+  orig: 30, 42
   offset: 0, 0
-  index: 2
+  index: 10
 enemies/moblin-walk-right
   rotate: false
   xy: 287, 52
   size: 24, 42
   orig: 24, 42
   offset: 0, 0
-  index: 3
+  index: 2
 enemies/moblin-walk-right
   rotate: false
   xy: 393, 364
   size: 24, 42
   orig: 24, 42
   offset: 0, 0
-  index: 4
+  index: 3
 enemies/moblin-walk-right
   rotate: false
   xy: 298, 342
   size: 24, 42
   orig: 24, 42
   offset: 0, 0
-  index: 5
+  index: 4
 enemies/moblin-walk-right
   rotate: false
   xy: 298, 298
   size: 24, 42
   orig: 24, 42
   offset: 0, 0
-  index: 8
+  index: 5
 enemies/moblin-walk-right
   rotate: false
   xy: 332, 230
   size: 24, 42
   orig: 24, 42
   offset: 0, 0
-  index: 9
+  index: 8
 enemies/moblin-walk-right
   rotate: false
   xy: 334, 186
   size: 24, 42
   orig: 24, 42
   offset: 0, 0
+  index: 9
+enemies/moblin-walk-right
+  rotate: false
+  xy: 348, 142
+  size: 24, 42
+  orig: 24, 42
+  offset: 0, 0
   index: 10
 enemies/moblin-walk-right
   rotate: false
-  xy: 356, 318
+  xy: 351, 99
   size: 24, 41
   orig: 24, 41
   offset: 0, 0
   index: 7
 enemies/moblin-walk-up
   rotate: false
-  xy: 361, 364
-  size: 30, 42
-  orig: 30, 42
+  xy: 850, 417
+  size: 31, 42
+  orig: 31, 42
   offset: 0, 0
-  index: 2
+  index: 9
 enemies/moblin-walk-up
   rotate: false
   xy: 324, 317
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
-  index: 3
+  index: 2
 enemies/moblin-walk-up
   rotate: false
   xy: 300, 230
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
-  index: 4
+  index: 3
 enemies/moblin-walk-up
   rotate: false
   xy: 302, 186
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
+  index: 4
+enemies/moblin-walk-up
+  rotate: false
+  xy: 316, 142
+  size: 30, 42
+  orig: 30, 42
+  offset: 0, 0
   index: 5
 enemies/moblin-walk-up
   rotate: false
-  xy: 310, 142
+  xy: 313, 62
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 7
 enemies/moblin-walk-up
   rotate: false
-  xy: 342, 142
+  xy: 313, 18
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 8
 enemies/moblin-walk-up
   rotate: false
-  xy: 312, 98
-  size: 30, 42
-  orig: 30, 42
-  offset: 0, 0
-  index: 9
-enemies/moblin-walk-up
-  rotate: false
-  xy: 344, 98
+  xy: 345, 55
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
@@ -748,84 +748,84 @@ grill-opened2
   index: -1
 heal
   rotate: false
-  xy: 298, 280
+  xy: 409, 26
   size: 22, 16
   orig: 22, 16
   offset: 0, 0
   index: 1
 heal
   rotate: false
-  xy: 525, 372
+  xy: 56, 7
   size: 22, 15
   orig: 22, 15
   offset: 0, 0
   index: 2
 heart-empty
   rotate: false
-  xy: 56, 3
+  xy: 298, 277
   size: 19, 19
   orig: 19, 19
   offset: 0, 0
   index: -1
 heart-full
   rotate: false
-  xy: 447, 364
+  xy: 640, 392
   size: 19, 19
   orig: 19, 19
   offset: 0, 0
   index: -1
 heart-half
   rotate: false
-  xy: 468, 364
+  xy: 661, 392
   size: 19, 19
   orig: 19, 19
   offset: 0, 0
   index: -1
 heart-heal-empty
   rotate: false
-  xy: 467, 343
+  xy: 682, 392
   size: 19, 19
   orig: 19, 19
   offset: 0, 0
   index: -1
 heart-heal-full
   rotate: false
-  xy: 549, 370
+  xy: 703, 392
   size: 19, 19
   orig: 19, 19
   offset: 0, 0
   index: -1
 heart-heal-half
   rotate: false
-  xy: 449, 318
+  xy: 724, 392
   size: 19, 19
   orig: 19, 19
   offset: 0, 0
   index: -1
 heart-hit-empty
   rotate: false
-  xy: 445, 297
+  xy: 745, 392
   size: 19, 19
   orig: 19, 19
   offset: 0, 0
   index: -1
 heart-hit-full
   rotate: false
-  xy: 470, 322
+  xy: 766, 392
   size: 19, 19
   orig: 19, 19
   offset: 0, 0
   index: -1
 heart-hit-half
   rotate: false
-  xy: 580, 392
+  xy: 787, 392
   size: 19, 19
   orig: 19, 19
   offset: 0, 0
   index: -1
 javelin
   rotate: false
-  xy: 414, 324
+  xy: 356, 321
   size: 8, 38
   orig: 8, 38
   offset: 0, 0
@@ -846,273 +846,273 @@ light
   index: 2
 marker-blue
   rotate: false
-  xy: 445, 284
+  xy: 72, 188
   size: 10, 11
   orig: 10, 11
   offset: 0, 0
   index: 1
 marker-blue
   rotate: false
-  xy: 72, 188
-  size: 10, 11
-  orig: 10, 11
-  offset: 0, 0
-  index: 2
-marker-red
-  rotate: false
   xy: 270, 151
   size: 10, 11
   orig: 10, 11
   offset: 0, 0
+  index: 2
+marker-red
+  rotate: false
+  xy: 604, 375
+  size: 10, 11
+  orig: 10, 11
+  offset: 0, 0
   index: 1
 marker-red
   rotate: false
-  xy: 337, 5
+  xy: 80, 11
   size: 10, 11
   orig: 10, 11
   offset: 0, 0
   index: 2
 marker-yellow
   rotate: false
-  xy: 601, 400
+  xy: 616, 375
   size: 10, 11
   orig: 10, 11
   offset: 0, 0
   index: 1
 marker-yellow
   rotate: false
-  xy: 349, 5
+  xy: 628, 375
   size: 10, 11
   orig: 10, 11
   offset: 0, 0
   index: 2
 player/player-idle-down
   rotate: false
-  xy: 313, 58
+  xy: 345, 15
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
   index: 1
 player/player-walk-down
   rotate: false
-  xy: 313, 58
+  xy: 345, 15
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
   index: 1
 player/player-idle-down
   rotate: false
-  xy: 412, 5
+  xy: 433, 5
   size: 30, 37
   orig: 30, 37
   offset: 0, 0
   index: 2
 player/player-walk-down
   rotate: false
-  xy: 412, 5
+  xy: 433, 5
   size: 30, 37
   orig: 30, 37
   offset: 0, 0
   index: 6
 player/player-idle-right
   rotate: false
-  xy: 374, 158
+  xy: 398, 324
   size: 23, 38
   orig: 23, 38
   offset: 0, 0
   index: 1
 player/player-walk-right
   rotate: false
-  xy: 374, 158
+  xy: 398, 324
   size: 23, 38
   orig: 23, 38
   offset: 0, 0
   index: 1
 player/player-idle-right
   rotate: false
-  xy: 441, 85
+  xy: 522, 375
   size: 23, 37
   orig: 23, 37
   offset: 0, 0
   index: 2
 player/player-walk-right
   rotate: false
-  xy: 441, 85
+  xy: 522, 375
   size: 23, 37
   orig: 23, 37
   offset: 0, 0
   index: 6
 player/player-idle-up
   rotate: false
-  xy: 313, 18
+  xy: 366, 324
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
   index: 1
 player/player-walk-up
   rotate: false
-  xy: 313, 18
+  xy: 366, 324
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
   index: 1
 player/player-idle-up
   rotate: false
-  xy: 441, 46
+  xy: 458, 382
   size: 30, 37
   orig: 30, 37
   offset: 0, 0
   index: 2
 player/player-walk-up
   rotate: false
-  xy: 441, 46
+  xy: 458, 382
   size: 30, 37
   orig: 30, 37
   offset: 0, 0
   index: 6
 player/player-walk-down
   rotate: false
-  xy: 345, 58
+  xy: 356, 281
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
   index: 2
-player/player-walk-down
-  rotate: false
-  xy: 345, 18
-  size: 30, 38
-  orig: 30, 38
-  offset: 0, 0
-  index: 3
-player/player-walk-down
-  rotate: false
-  xy: 382, 324
-  size: 30, 38
-  orig: 30, 38
-  offset: 0, 0
-  index: 4
-player/player-walk-down
-  rotate: false
-  xy: 356, 278
-  size: 30, 38
-  orig: 30, 38
-  offset: 0, 0
-  index: 5
-player/player-walk-down
-  rotate: false
-  xy: 358, 238
-  size: 30, 38
-  orig: 30, 38
-  offset: 0, 0
-  index: 8
-player/player-walk-down
-  rotate: false
-  xy: 360, 198
-  size: 30, 38
-  orig: 30, 38
-  offset: 0, 0
-  index: 9
 player/player-walk-down
   rotate: false
   xy: 388, 284
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
+  index: 3
+player/player-walk-down
+  rotate: false
+  xy: 358, 241
+  size: 30, 38
+  orig: 30, 38
+  offset: 0, 0
+  index: 4
+player/player-walk-down
+  rotate: false
+  xy: 390, 244
+  size: 30, 38
+  orig: 30, 38
+  offset: 0, 0
+  index: 5
+player/player-walk-down
+  rotate: false
+  xy: 360, 201
+  size: 30, 38
+  orig: 30, 38
+  offset: 0, 0
+  index: 8
+player/player-walk-down
+  rotate: false
+  xy: 392, 204
+  size: 30, 38
+  orig: 30, 38
+  offset: 0, 0
+  index: 9
+player/player-walk-down
+  rotate: false
+  xy: 374, 146
+  size: 30, 38
+  orig: 30, 38
+  offset: 0, 0
   index: 10
 player/player-walk-down
   rotate: false
-  xy: 444, 7
+  xy: 490, 375
   size: 30, 37
   orig: 30, 37
   offset: 0, 0
   index: 7
 player/player-walk-right
   rotate: false
-  xy: 399, 164
-  size: 23, 38
-  orig: 23, 38
-  offset: 0, 0
-  index: 2
-player/player-walk-right
-  rotate: false
-  xy: 376, 118
-  size: 23, 38
-  orig: 23, 38
-  offset: 0, 0
-  index: 3
-player/player-walk-right
-  rotate: false
-  xy: 401, 124
-  size: 23, 38
-  orig: 23, 38
-  offset: 0, 0
-  index: 4
-player/player-walk-right
-  rotate: false
   xy: 420, 284
   size: 23, 38
   orig: 23, 38
   offset: 0, 0
-  index: 5
+  index: 2
 player/player-walk-right
   rotate: false
   xy: 422, 244
   size: 23, 38
   orig: 23, 38
   offset: 0, 0
-  index: 8
+  index: 3
 player/player-walk-right
   rotate: false
   xy: 424, 204
   size: 23, 38
   orig: 23, 38
   offset: 0, 0
+  index: 4
+player/player-walk-right
+  rotate: false
+  xy: 438, 164
+  size: 23, 38
+  orig: 23, 38
+  offset: 0, 0
+  index: 5
+player/player-walk-right
+  rotate: false
+  xy: 441, 124
+  size: 23, 38
+  orig: 23, 38
+  offset: 0, 0
+  index: 8
+player/player-walk-right
+  rotate: false
+  xy: 441, 84
+  size: 23, 38
+  orig: 23, 38
+  offset: 0, 0
   index: 9
 player/player-walk-right
   rotate: false
-  xy: 424, 164
+  xy: 441, 44
   size: 23, 38
   orig: 23, 38
   offset: 0, 0
   index: 10
 player/player-walk-right
   rotate: false
-  xy: 424, 325
+  xy: 579, 374
   size: 23, 37
   orig: 23, 37
   offset: 0, 0
   index: 7
 player/player-walk-up
   rotate: false
-  xy: 390, 244
+  xy: 377, 106
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
   index: 2
 player/player-walk-up
   rotate: false
-  xy: 392, 204
+  xy: 377, 66
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
   index: 3
 player/player-walk-up
   rotate: false
-  xy: 426, 124
+  xy: 377, 26
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
   index: 4
 player/player-walk-up
   rotate: false
-  xy: 377, 78
+  xy: 406, 164
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
   index: 5
 player/player-walk-up
   rotate: false
-  xy: 377, 38
+  xy: 409, 124
   size: 30, 38
   orig: 30, 38
   offset: 0, 0
@@ -1133,14 +1133,14 @@ player/player-walk-up
   index: 10
 player/player-walk-up
   rotate: false
-  xy: 493, 375
+  xy: 547, 376
   size: 30, 37
   orig: 30, 37
   offset: 0, 0
   index: 7
 player/shadow
   rotate: false
-  xy: 313, 3
+  xy: 360, 186
   size: 22, 13
   orig: 22, 13
   offset: 0, 0
@@ -1203,7 +1203,7 @@ reload-blue-empty
   index: -1
 reload-blue-full
   rotate: false
-  xy: 392, 198
+  xy: 84, 195
   size: 5, 4
   split: 2, 2, 1, 2
   orig: 5, 4
@@ -1218,7 +1218,7 @@ reload-red-empty
   index: -1
 reload-red-full
   rotate: false
-  xy: 401, 118
+  xy: 84, 189
   size: 5, 4
   split: 2, 2, 1, 2
   orig: 5, 4
@@ -1226,14 +1226,14 @@ reload-red-full
   index: -1
 reload-yellow-empty
   rotate: false
-  xy: 300, 274
+  xy: 216, 5
   size: 20, 4
   orig: 20, 4
   offset: 0, 0
   index: -1
 reload-yellow-full
   rotate: false
-  xy: 84, 195
+  xy: 238, 5
   size: 5, 4
   split: 2, 2, 1, 2
   orig: 5, 4
@@ -1248,7 +1248,7 @@ shield-silver-down
   index: -1
 shield-silver-right
   rotate: false
-  xy: 525, 389
+  xy: 604, 388
   size: 16, 23
   orig: 16, 23
   offset: 0, 0
@@ -1262,21 +1262,21 @@ shield-silver-up
   index: -1
 shield-wood-down
   rotate: false
-  xy: 419, 364
+  xy: 377, 2
   size: 26, 22
   orig: 26, 22
   offset: 0, 0
   index: -1
 shield-wood-right
   rotate: false
-  xy: 449, 339
+  xy: 622, 388
   size: 16, 23
   orig: 16, 23
   offset: 0, 0
   index: -1
 shield-wood-up
   rotate: false
-  xy: 543, 391
+  xy: 405, 2
   size: 26, 22
   orig: 26, 22
   offset: 0, 0
@@ -1297,21 +1297,21 @@ spike_open
   index: -1
 type-blue
   rotate: false
-  xy: 377, 2
+  xy: 947, 425
   size: 33, 34
   orig: 33, 34
   offset: 0, 0
   index: -1
 type-red
   rotate: false
-  xy: 423, 388
+  xy: 316, 106
   size: 33, 34
   orig: 33, 34
   offset: 0, 0
   index: -1
 type-yellow
   rotate: false
-  xy: 458, 385
+  xy: 423, 388
   size: 33, 34
   orig: 33, 34
   offset: 0, 0

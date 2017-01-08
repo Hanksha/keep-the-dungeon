@@ -17,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.calderagames.ld37.LD37Game;
+import com.calderagames.ld37.ai.MovementState;
 import com.calderagames.ld37.system.component.AIComponent;
 import com.calderagames.ld37.system.component.ActorComponent;
 import org.apache.commons.lang3.RandomUtils;
@@ -28,9 +29,8 @@ public class RoomSystem extends BaseSystem {
     private static final Logger logger = LogManager.getLogger();
     public static final int TILE_SIZE = 40;
 
-
-
     private EntityFactory entityFactory;
+    private AISystem aiSystem;
     private TmxMapLoader mapLoader;
     private OrthogonalTiledMapRenderer renderer;
     private TiledMap room;
@@ -87,6 +87,7 @@ public class RoomSystem extends BaseSystem {
 
     private void popEnemy() {
         int id = entityFactory.makeEnemy("enemy-javeliner", RandomUtils.nextInt(0, 3), enemySpawnPos.x, enemySpawnPos.y);
+        aiSystem.changeGlobalState(id, MovementState.ON_PATH);
     }
 
     @Override

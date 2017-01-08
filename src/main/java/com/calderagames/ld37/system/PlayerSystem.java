@@ -15,6 +15,7 @@ import com.calderagames.ld37.system.component.ActorComponent;
 import com.calderagames.ld37.system.component.AnimationComponent;
 import com.calderagames.ld37.system.component.MoveComponent;
 import com.calderagames.ld37.system.component.PhysicsComponent;
+import com.calderagames.ld37.system.event.ArrowTypeEvent;
 import com.calderagames.ld37.utils.InputUtils;
 import com.calderagames.ld37.utils.Maths;
 import org.apache.logging.log4j.LogManager;
@@ -37,6 +38,8 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
     @Wire
     PlayScreen playScreen;
 
+    private EventSystem eventSystem;
+
     private EntityFactory entityFactory;
     private GroupManager groupManager;
     private RoomSystem roomSystem;
@@ -48,9 +51,9 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
     private int playerId;
 
     private final int numArrowType = 3;
-    public final int ARROW_YELLOW = 0;
-    public final int ARROW_BLUE = 1;
-    public final int ARROW_RED = 2;
+    public static final int ARROW_YELLOW = 0;
+    public static final int ARROW_BLUE = 1;
+    public static final int ARROW_RED = 2;
     private final String[] arrowTypes = new String[] {"arrow-yellow", "arrow-blue", "arrow-red"};
 
     private float arrowSpeed = 600;
@@ -93,14 +96,7 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
 
     private void processAnim() {
         AnimationComponent animComp = animMapper.get(playerId);
-        if((aimAngle <= 45 && aimAngle >= 0) || (aimAngle >= 315 && aimAngle <= 360))
-            animComp.direction = AnimationComponent.Direction.RIGHT;
-        else if(aimAngle > 45 && aimAngle < 135)
-            animComp.direction = AnimationComponent.Direction.UP;
-        else if(aimAngle >= 135 && aimAngle < 225)
-            animComp.direction = AnimationComponent.Direction.LEFT;
-        else if(aimAngle >= 225 && aimAngle < 315)
-            animComp.direction = AnimationComponent.Direction.DOWN;
+            animComp.direction = AnimationSystem.getDirectionFromAngle(aimAngle);
 
         PhysicsComponent physicsComp = physicsMapper.get(playerId);
 
@@ -145,10 +141,12 @@ public class PlayerSystem extends BaseSystem implements InputProcessor {
     }
 
     private void setArrowType() {
-        currentArrowType++;
+        final int oldType = ++currentArrowType;
 
         if(currentArrowType >= numArrowType)
             currentArrowType = 0;
+
+        eventSystem.send(new ArrowTypeEvent(oldType, currentArrowType));
 
         shootCooldown = shootRateTime / 2;
     }

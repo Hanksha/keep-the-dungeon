@@ -33,6 +33,10 @@ public class LD37Game extends Game {
     public static final int NATIVE_WIDTH = 640;
     public static final int NATIVE_HEIGHT = 360;
 
+    public static Cursor cursorRed;
+    public static Cursor cursorYellow;
+    public static Cursor cursorBlue;
+
     private static final Logger logger = LogManager.getLogger();
 
     private Injector injector;
@@ -78,8 +82,10 @@ public class LD37Game extends Game {
 
         assets.finishLoading();
 
-        Cursor cursor = Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("cursor.png")), 32, 32);
-        Gdx.graphics.setCursor(cursor);
+        cursorRed = Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("cursor-red.png")), 32, 32);
+        cursorBlue = Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("cursor-blue.png")), 32, 32);
+        cursorYellow = Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("cursor-yellow.png")), 32, 32);
+        Gdx.graphics.setCursor(cursorRed);
     }
 
     private void loadFonts() {

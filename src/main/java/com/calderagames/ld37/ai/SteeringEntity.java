@@ -14,6 +14,8 @@ public class SteeringEntity  implements Steerable<Vector2> {
     private float angularVelocity;
     private float boundingRadius;
 
+    private float maxLinearAcceleration;
+
     public SteeringEntity() {
         position = new Vector2();
         linearVelocity = new Vector2();
@@ -51,7 +53,7 @@ public class SteeringEntity  implements Steerable<Vector2> {
 
     @Override
     public float getZeroLinearSpeedThreshold() {
-        return 0.5f;
+        return 0.05f;
     }
 
     @Override
@@ -71,12 +73,12 @@ public class SteeringEntity  implements Steerable<Vector2> {
 
     @Override
     public float getMaxLinearAcceleration() {
-        return 400;
+        return maxLinearAcceleration;
     }
 
     @Override
     public void setMaxLinearAcceleration(float maxLinearAcceleration) {
-
+        this.maxLinearAcceleration = maxLinearAcceleration;
     }
 
     @Override

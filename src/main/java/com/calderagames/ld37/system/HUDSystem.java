@@ -3,6 +3,7 @@ package com.calderagames.ld37.system;
 import com.artemis.BaseSystem;
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.Wire;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,7 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.calderagames.ld37.LD37Game;
 import com.calderagames.ld37.system.component.HealthComponent;
+import com.calderagames.ld37.system.event.ArrowTypeEvent;
 import com.calderagames.ld37.system.event.HealthEvent;
 import com.calderagames.ld37.system.event.SystemEvent;
 import com.calderagames.ld37.system.event.SystemEventListener;
@@ -46,6 +49,9 @@ public class HUDSystem extends BaseSystem implements SystemEventListener {
 
     @Override
     protected void initialize() {
+        eventSystem.subscribe(HealthEvent.class, this);
+        eventSystem.subscribe(ArrowTypeEvent.class, this);
+
         hudGroup = new Group();
         stage.addActor(hudGroup);
 
@@ -57,7 +63,6 @@ public class HUDSystem extends BaseSystem implements SystemEventListener {
         heartFullImg = atlas.findRegion("heart-full");
         heartEmptyImg = atlas.findRegion("heart-empty");
         setHealth();
-        eventSystem.subscribe(HealthEvent.class, this);
 
         quiverRegions = new TextureRegionDrawable[3];
         quiverRegions[0] = new TextureRegionDrawable(atlas.findRegion("quiver-yellow"));
@@ -93,14 +98,9 @@ public class HUDSystem extends BaseSystem implements SystemEventListener {
 
     @Override
     protected void processSystem() {
-        quiverImage.setDrawable(quiverRegions[playerSystem.getCurrentArrowType()]);
-
         reloadBarImg.setVisible(playerSystem.getShootCooldown() < 1f);
-        reloadBarImg.setDrawable(reloadBars[playerSystem.getCurrentArrowType()]);
         reloadBarImg.setSize(20 * playerSystem.getShootCooldown(), 4);
-
         reloadBarBgImg.setVisible(playerSystem.getShootCooldown() < 1f);
-        reloadBarBgImg.setDrawable(reloadBarBgs[playerSystem.getCurrentArrowType()]);
     }
 
     private void setHealth() {
@@ -124,6 +124,24 @@ public class HUDSystem extends BaseSystem implements SystemEventListener {
         if(event.getClass() == HealthEvent.class) {
             if(((HealthEvent) event).id == playerSystem.getPlayerId())
                 setHealth();
+        }
+        else if(event.getClass() == ArrowTypeEvent.class) {
+            final int arrowType = ((ArrowTypeEvent) event).newArrowType;
+            quiverImage.setDrawable(quiverRegions[arrowType]);
+            reloadBarImg.setDrawable(reloadBars[arrowType]);
+            reloadBarBgImg.setDrawable(reloadBarBgs[arrowType]);
+
+            switch (arrowType) {
+                case PlayerSystem.ARROW_RED:
+                    Gdx.graphics.setCursor(LD37Game.cursorRed);
+                    break;
+                case PlayerSystem.ARROW_BLUE:
+                    Gdx.graphics.setCursor(LD37Game.cursorBlue);
+                    break;
+                case PlayerSystem.ARROW_YELLOW:
+                    Gdx.graphics.setCursor(LD37Game.cursorYellow);
+                    break;
+            }
         }
 
     }

@@ -4,6 +4,7 @@ import com.artemis.Archetype;
 import com.artemis.ArchetypeBuilder;
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.Wire;
+import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,6 +17,8 @@ import com.badlogic.gdx.utils.Align;
 import com.calderagames.ld37.actor.AnimationActor;
 import com.calderagames.ld37.actor.BaseActor;
 import com.calderagames.ld37.actor.EnemyActor;
+import com.calderagames.ld37.ai.AIEntity;
+import com.calderagames.ld37.ai.JavelinerState;
 import com.calderagames.ld37.ai.SteeringEntity;
 import com.calderagames.ld37.system.component.*;
 
@@ -24,6 +27,7 @@ import java.util.HashMap;
 public class EntityFactory extends PassiveSystem {
 
     private GroupManager groupManager;
+    private AISystem aiSystem;
 
     private HashMap<String, Archetype> archetypes;
     private ComponentMapper<HealthComponent> healthMapper;
@@ -80,13 +84,13 @@ public class EntityFactory extends PassiveSystem {
                 .add(AnimationComponent.class)
                 .build(world);
 
-        archetypes.put("basic-entity", archetype);
+        archetypes.put("basic-steeringEntity", archetype);
 
-        archetype = new ArchetypeBuilder(archetypes.get("basic-entity"))
+        archetype = new ArchetypeBuilder(archetypes.get("basic-steeringEntity"))
                 .build(world);
         archetypes.put("player", archetype);
 
-        archetype = new ArchetypeBuilder(archetypes.get("basic-entity"))
+        archetype = new ArchetypeBuilder(archetypes.get("basic-steeringEntity"))
                 .add(EnemyComponent.class)
                 .add(AIComponent.class)
                 .build(world);
@@ -202,8 +206,9 @@ public class EntityFactory extends PassiveSystem {
         bodyActor.setName(name);
 
         AIComponent aiComp = AIMapper.get(id);
-        aiComp.entity = new SteeringEntity();
-        aiComp.state = AISystem.STATE_INIT;
+        aiComp.steeringEntity = new SteeringEntity();
+        aiComp.steeringEntity.setMaxLinearAcceleration(EnemySystem.DEFAULT_LINEAR_ACCELERATION);
+        aiComp.fsm = new DefaultStateMachine<>(new AIEntity(aiSystem, aiComp, id));
 
         if(name.contains("javeliner"))
             makeJaveliner(id, parentActor);
@@ -215,6 +220,9 @@ public class EntityFactory extends PassiveSystem {
         bodyActor.setOrigin(Align.center | Align.bottom);
         bodyActor.setName("body");
         parentActor.addActor(bodyActor);
+
+        AIComponent aiComp = AIMapper.get(id);
+        aiComp.fsm.changeState(JavelinerState.WALK);
     }
 
     private void makeProjectile(int id, String name) {

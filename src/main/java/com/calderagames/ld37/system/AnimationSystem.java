@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.calderagames.ld37.actor.AnimationActor;
 import com.calderagames.ld37.system.component.ActorComponent;
 import com.calderagames.ld37.system.component.AnimationComponent;
+import com.calderagames.ld37.utils.Maths;
 
 import java.util.HashMap;
 
@@ -92,16 +93,16 @@ public class AnimationSystem extends IteratingSystem {
         animations.put("enemy-javeliner-walk-left", anim);
 
         // moblin javeliner throw
-        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-throw-down"), Animation.PlayMode.LOOP);
+        anim = new Animation(0.125f, atlas.findRegions("enemies/moblin-throw-down"), Animation.PlayMode.LOOP);
         animations.put("enemy-javeliner-throw-down", anim);
 
-        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-throw-up"), Animation.PlayMode.LOOP);
+        anim = new Animation(0.125f, atlas.findRegions("enemies/moblin-throw-up"), Animation.PlayMode.LOOP);
         animations.put("enemy-javeliner-throw-up", anim);
 
-        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-throw-right"), Animation.PlayMode.LOOP);
+        anim = new Animation(0.125f, atlas.findRegions("enemies/moblin-throw-right"), Animation.PlayMode.LOOP);
         animations.put("enemy-javeliner-throw-right", anim);
 
-        anim = new Animation(0.1f, atlas.findRegions("enemies/moblin-throw-right"), Animation.PlayMode.LOOP);
+        anim = new Animation(0.125f, atlas.findRegions("enemies/moblin-throw-right"), Animation.PlayMode.LOOP);
         animations.put("enemy-javeliner-throw-left", anim);
     }
 
@@ -124,5 +125,31 @@ public class AnimationSystem extends IteratingSystem {
             else
                 actor.setFlipX(false);
         }
+    }
+
+    public static AnimationComponent.Direction getDirectionFromAngle(float angle) {
+        if((angle <= 45 && angle >= 0) || (angle >= 315 && angle <= 360))
+            return AnimationComponent.Direction.RIGHT;
+        else if(angle > 45 && angle < 135)
+            return AnimationComponent.Direction.UP;
+        else if(angle >= 135 && angle < 225)
+            return AnimationComponent.Direction.LEFT;
+        else if(angle >= 225 && angle < 315)
+            return AnimationComponent.Direction.DOWN;
+
+        return AnimationComponent.Direction.LEFT;
+    }
+
+    public static AnimationComponent.Direction getDirectionFromAngle(float x, float y, float targetX, float targetY) {
+
+        float angle = Maths.getAngle(
+                x,
+                y,
+                targetX, targetY);
+
+        if(angle < 0)
+            angle = angle + 360;
+
+        return getDirectionFromAngle(angle);
     }
 }
