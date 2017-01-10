@@ -15,7 +15,7 @@ public class EnemySystem extends IteratingSystem {
 
     private static final Logger logger = LogManager.getLogger();
 
-    public static final float DEFAULT_LINEAR_ACCELERATION = 400;
+    public static final float DEFAULT_LINEAR_ACCELERATION = 450;
 
     private GroupManager groupManager;
     private EntityFactory entityFactory;

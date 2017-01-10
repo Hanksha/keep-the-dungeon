@@ -5,6 +5,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -31,6 +34,8 @@ public class HUDSystem extends BaseSystem implements SystemEventListener {
 
     private EventSystem eventSystem;
     private PlayerSystem playerSystem;
+    private ScoreSystem scoreSystem;
+
     private ComponentMapper<HealthComponent> healthMapper;
 
     @Wire
@@ -42,6 +47,8 @@ public class HUDSystem extends BaseSystem implements SystemEventListener {
     private TextureRegionDrawable[] reloadBarBgs;
     private Image reloadBarImg;
     private Image reloadBarBgImg;
+    private Label scoreMultiplierLabel;
+    private Label scoreLabel;
 
     private TextureRegion heartFullImg;
     private TextureRegion heartEmptyImg;
@@ -54,6 +61,23 @@ public class HUDSystem extends BaseSystem implements SystemEventListener {
 
         hudGroup = new Group();
         stage.addActor(hudGroup);
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = assets.get("font-16");
+        labelStyle.fontColor = Color.WHITE;
+
+        Table scoreTable = new Table();
+        scoreTable.setPosition(20, NATIVE_HEIGHT - 40);
+        scoreTable.align(Align.topLeft);
+        hudGroup.addActor(scoreTable);
+
+        scoreLabel = new Label("score: 0", labelStyle);
+        scoreTable.add(scoreLabel).align(Align.left);
+        scoreTable.row().space(4);
+
+        scoreMultiplierLabel = new Label("X 1", labelStyle);
+        scoreTable.add(scoreMultiplierLabel).align(Align.left);
+
 
         healthGroup = new HorizontalGroup();
         hudGroup.addActor(healthGroup);
@@ -101,6 +125,8 @@ public class HUDSystem extends BaseSystem implements SystemEventListener {
         reloadBarImg.setVisible(playerSystem.getShootCooldown() < 1f);
         reloadBarImg.setSize(20 * playerSystem.getShootCooldown(), 4);
         reloadBarBgImg.setVisible(playerSystem.getShootCooldown() < 1f);
+        scoreMultiplierLabel.setText("X " + scoreSystem.getMultiplier());
+        scoreLabel.setText("score: " + scoreSystem.getScore());
     }
 
     private void setHealth() {

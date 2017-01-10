@@ -74,7 +74,7 @@ public class RoomSystem extends BaseSystem {
             public void run() {
                 popEnemy();
             }
-        }, 5, 4);
+        }, 5, 2);
     }
 
     private void loadRoom(String roomId) {

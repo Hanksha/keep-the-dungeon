@@ -45,8 +45,8 @@ public class PlayScreen extends ScreenAdapter {
     public void show() {
         WorldConfiguration config = new WorldConfigurationBuilder()
                 .with(new GroupManager())
-                .with(new EntityFactory())
                 .with(new EventSystem())
+                .with(new EntityFactory())
                 .with(new PlayerSystem())
                 .with(new EnemySystem())
                 .with(new MoveSystem())
@@ -59,6 +59,7 @@ public class PlayScreen extends ScreenAdapter {
                 .with(new HealthSystem())
                 .with(new ProjectileSystem())
                 .with(new RoomSystem())
+                .with(new ScoreSystem())
                 .with(new HUDSystem())
                 .with(new DeathSystem())
                 .with(new AudioSystem())

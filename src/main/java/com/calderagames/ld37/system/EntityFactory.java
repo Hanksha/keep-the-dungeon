@@ -2,8 +2,10 @@ package com.calderagames.ld37.system;
 
 import com.artemis.Archetype;
 import com.artemis.ArchetypeBuilder;
+import com.artemis.BaseSystem;
 import com.artemis.ComponentMapper;
 import com.artemis.annotations.Wire;
+import com.artemis.utils.IntBag;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -21,13 +23,15 @@ import com.calderagames.ld37.ai.AIEntity;
 import com.calderagames.ld37.ai.JavelinerState;
 import com.calderagames.ld37.ai.SteeringEntity;
 import com.calderagames.ld37.system.component.*;
+import com.calderagames.ld37.system.event.ShootEvent;
 
 import java.util.HashMap;
 
-public class EntityFactory extends PassiveSystem {
+public class EntityFactory extends BaseSystem {
 
     private GroupManager groupManager;
     private AISystem aiSystem;
+    private EventSystem eventSystem;
 
     private HashMap<String, Archetype> archetypes;
     private ComponentMapper<HealthComponent> healthMapper;
@@ -50,9 +54,12 @@ public class EntityFactory extends PassiveSystem {
     private AssetManager assets;
     private TextureAtlas atlas;
 
+    private IntBag entitiesToRemove;
+
     public EntityFactory() {
         super();
         archetypes = new HashMap<>();
+        entitiesToRemove = new IntBag();
     }
 
     @Override
@@ -71,6 +78,11 @@ public class EntityFactory extends PassiveSystem {
         projectileGroup = new Group();
         projectileGroup.setPosition(0, 0, Align.bottomLeft);
         stage.addActor(projectileGroup);
+    }
+
+    @Override
+    protected void processSystem() {
+        removeEntities();
     }
 
     private void setUpArchetypes() {
@@ -297,15 +309,24 @@ public class EntityFactory extends PassiveSystem {
         PhysicsComponent physicsComp = physicsMapper.get(id);
         physicsComp.vx = speed * MathUtils.cosDeg(angle + 90);
         physicsComp.vy = speed * MathUtils.sinDeg(angle + 90);
+        eventSystem.post(new ShootEvent(id));
         return id;
     }
 
     public void removeEntity(int entityId) {
-        if(actorMapper.has(entityId)) {
-            actorMapper.get(entityId).actor.remove();
+        entitiesToRemove.add(entityId);
+    }
+
+    private void removeEntities() {
+        for(int i = 0, id; i < entitiesToRemove.size(); i++) {
+            id = entitiesToRemove.get(i);
+            if(actorMapper.has(id)) {
+                actorMapper.get(id).actor.remove();
+            }
+            groupManager.removeFromAllGroups(id);
+            world.delete(id);
         }
-        groupManager.removeFromAllGroups(entityId);
-        world.delete(entityId);
+        entitiesToRemove.clear();
     }
 
     public Group getEnemiesGroup() {

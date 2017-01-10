@@ -8,6 +8,8 @@ import com.calderagames.ld37.system.component.ActorComponent;
 import com.calderagames.ld37.system.component.EnemyComponent;
 import com.calderagames.ld37.system.component.PositionComponent;
 import com.calderagames.ld37.system.event.HitEvent;
+import com.calderagames.ld37.system.event.HitMissEvent;
+import com.calderagames.ld37.system.event.HitResistEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -59,6 +61,8 @@ public class ProjectileSystem extends BaseSystem {
                     if(isTypeMatchArrow(enemyComp.type, actorMapper.get(projId).actor)) {
                         eventSystem.send(new HitEvent(enemyId, projId, 1));
                     }
+                    else
+                        eventSystem.send(new HitResistEvent(projId));
                     entityFactory.removeEntity(projId);
                 }
             }
@@ -70,6 +74,8 @@ public class ProjectileSystem extends BaseSystem {
             id = projectiles.get(i);
 
             if(checkOutOfWorld(id)) {
+                if(groupManager.getGroups(id).contains("player-arrows"))
+                    eventSystem.send(new HitMissEvent(id));
                 entityFactory.removeEntity(id);
             }
         }
