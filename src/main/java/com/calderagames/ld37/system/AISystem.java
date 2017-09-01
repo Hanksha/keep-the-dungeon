@@ -33,6 +33,7 @@ public class AISystem extends IteratingSystem implements SystemEventListener {
     public EntityFactory entityFactory;
     public PlayerSystem playerSystem;
     public CollisionSystem collisionSystem;
+    public EventSystem eventSystem;
     private GroupManager groupManager;
 
     private final SteeringAcceleration<Vector2> steeringOuput = new SteeringAcceleration<Vector2>(new Vector2());

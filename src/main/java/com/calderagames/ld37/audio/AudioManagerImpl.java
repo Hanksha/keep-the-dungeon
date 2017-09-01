@@ -77,7 +77,7 @@ public class AudioManagerImpl implements AudioManager {
         while(iter.hasNext()) {
             entry = iter.next();
 
-            if(AL10.alGetSourcei(soundIdToSourceId.get(entry.key), AL10.AL_SOURCE_STATE) == AL10.AL_STOPPED) {
+            if(soundIdToSourceId.get(entry.key) == null || AL10.alGetSourcei(soundIdToSourceId.get(entry.key), AL10.AL_SOURCE_STATE) == AL10.AL_STOPPED) {
                 logger.debug(String.format("sound %s id %s stopped", entry.value.getName(), entry.key));
                 iter.remove();
                 soundPool.free(entry.value);
@@ -146,6 +146,10 @@ public class AudioManagerImpl implements AudioManager {
     public long playSound(String name, float volume, float pitch, float pan) {
         Sound sound = assets.get(soundEffectsFolder + name);
         long id = sound.play(volume * effectsVol * masterVol, pitch, pan);
+
+        if(id == -1)
+            return id;
+
         SoundInstance instance = soundPool.obtain();
         instance.init(name, sound, id, volume);
         logger.debug(String.format("playing %s id %s", instance.getName(), instance.getId()));

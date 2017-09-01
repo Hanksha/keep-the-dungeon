@@ -14,6 +14,8 @@ public class AIComponent extends Component {
 
     public SteeringEntity steeringEntity;
 
+    public float defaultLinearAcceleration;
+
     public DefaultStateMachine<AIEntity, State<AIEntity>> fsm;
 
 }

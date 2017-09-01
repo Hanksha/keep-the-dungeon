@@ -111,6 +111,7 @@ public class EntityFactory extends BaseSystem {
         archetype = new ArchetypeBuilder(archetypes.get("enemy"))
                 .build(world);
         archetypes.put("enemy-javeliner", archetype);
+        archetypes.put("enemy-swordman", archetype);
 
         archetype = new ArchetypeBuilder()
                 .add(PositionComponent.class)
@@ -224,6 +225,8 @@ public class EntityFactory extends BaseSystem {
 
         if(name.contains("javeliner"))
             makeJaveliner(id, parentActor);
+        else if(name.contains("swordman"))
+            makeSwordman(id, parentActor);
     }
 
     private void makeJaveliner(int id, Group parentActor) {
@@ -235,6 +238,21 @@ public class EntityFactory extends BaseSystem {
 
         AIComponent aiComp = AIMapper.get(id);
         aiComp.fsm.changeState(JavelinerState.WALK);
+        aiComp.defaultLinearAcceleration = 450;
+        aiComp.steeringEntity.setMaxLinearAcceleration(aiComp.defaultLinearAcceleration);
+    }
+
+    private void makeSwordman(int id, Group parentActor) {
+        AnimationActor bodyActor = new AnimationActor(null);
+        bodyActor.setPosition(0, 0, Align.center | Align.bottom);
+        bodyActor.setOrigin(Align.center | Align.bottom);
+        bodyActor.setName("body");
+        parentActor.addActor(bodyActor);
+
+        AIComponent aiComp = AIMapper.get(id);
+        aiComp.fsm.changeState(SwordmanState.WALK);
+        aiComp.defaultLinearAcceleration = 600;
+        aiComp.steeringEntity.setMaxLinearAcceleration(aiComp.defaultLinearAcceleration);
     }
 
     private void makeProjectile(int id, String name) {

@@ -86,7 +86,9 @@ public class RoomSystem extends BaseSystem {
     }
 
     private void popEnemy() {
-        int id = entityFactory.makeEnemy("enemy-javeliner", RandomUtils.nextInt(0, 3), enemySpawnPos.x, enemySpawnPos.y);
+        int id = entityFactory.makeEnemy(
+                RandomUtils.nextInt(0, 2) == 0? "enemy-javeliner" : "enemy-swordman",
+                RandomUtils.nextInt(0, 3), enemySpawnPos.x, enemySpawnPos.y);
         aiSystem.changeGlobalState(id, MovementState.ON_PATH);
     }
 

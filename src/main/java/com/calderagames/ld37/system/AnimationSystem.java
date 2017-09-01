@@ -104,6 +104,45 @@ public class AnimationSystem extends IteratingSystem {
 
         anim = new Animation(0.125f, atlas.findRegions("enemies/moblin-throw-right"), Animation.PlayMode.LOOP);
         animations.put("enemy-javeliner-throw-left", anim);
+
+        // redmoblin swordman idle
+        anim = new Animation(0.4f, atlas.findRegions("enemies/redmoblin-idle-down"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-idle-down", anim);
+
+        anim = new Animation(0.4f, atlas.findRegions("enemies/redmoblin-idle-up"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-idle-up", anim);
+
+        anim = new Animation(0.4f, atlas.findRegions("enemies/redmoblin-idle-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-idle-right", anim);
+
+        anim = new Animation(0.4f, atlas.findRegions("enemies/redmoblin-idle-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-idle-left", anim);
+
+        // redmoblin swordman walk
+        anim = new Animation(0.1f, atlas.findRegions("enemies/redmoblin-walk-down"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-walk-down", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/redmoblin-walk-up"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-walk-up", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/redmoblin-walk-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-walk-right", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/redmoblin-walk-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-walk-left", anim);
+
+        // redmoblin swordman attack
+        anim = new Animation(0.1f, atlas.findRegions("enemies/redmoblin-attack-down"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-attack-down", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/redmoblin-attack-up"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-attack-up", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/redmoblin-attack-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-attack-right", anim);
+
+        anim = new Animation(0.1f, atlas.findRegions("enemies/redmoblin-attack-right"), Animation.PlayMode.LOOP);
+        animations.put("enemy-swordman-attack-left", anim);
     }
 
     @Override

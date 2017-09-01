@@ -1,34 +1,31 @@
-package com.calderagames.ld37.ai;
+package com.calderagames.ld37.system;
 
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.MessageManager;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.math.Vector2;
-import com.calderagames.ld37.system.AISystem;
-import com.calderagames.ld37.system.AnimationSystem;
-import com.calderagames.ld37.system.EnemySystem;
+import com.calderagames.ld37.ai.AIEntity;
 import com.calderagames.ld37.system.component.AnimationComponent;
 import com.calderagames.ld37.system.component.PositionComponent;
+import com.calderagames.ld37.system.event.HitEvent;
 
-public enum JavelinerState implements State<AIEntity> {
+public enum SwordmanState implements State<AIEntity> {
     WALK() {
         @Override
         public void enter(AIEntity entity) {
-            MessageManager.getInstance().addListener(entity.ai.fsm, AISystem.ATTACK);
             AnimationComponent animComp = entity.system.animMapper.get(entity.id);
-            animComp.anim = "enemy-javeliner-walk";
+            animComp.anim = "enemy-swordman-walk";
             entity.ai.steeringEntity.setMaxLinearAcceleration(entity.ai.defaultLinearAcceleration);
         }
 
         @Override
-        public void exit(AIEntity entity) {
-            MessageManager.getInstance().removeListener(entity.ai.fsm, AISystem.ATTACK);
+        public void update(AIEntity entity) {
+            if(entity.ai.steeringEntity.getPosition().dst(entity.system.playerPos) < 32)
+                entity.ai.fsm.changeState(ATTACK);
         }
 
         @Override
-        public boolean onMessage(AIEntity entity, Telegram telegram) {
-            entity.ai.fsm.changeState(ATTACK);
-            return true;
+        public void exit(AIEntity entity) {
         }
     },
 
@@ -38,8 +35,8 @@ public enum JavelinerState implements State<AIEntity> {
             MessageManager.getInstance().addListener(entity.ai.fsm, AISystem.FIRE);
             MessageManager.getInstance().dispatchMessage(0.4f, entity.ai.fsm, entity.ai.fsm, AISystem.FIRE, entity.system.playerPos);
             AnimationComponent animComp = entity.system.animMapper.get(entity.id);
-            animComp.anim = "enemy-javeliner-throw";
-            entity.ai.steeringEntity.setMaxLinearAcceleration(entity.ai.defaultLinearAcceleration / 3);
+            animComp.anim = "enemy-swordman-attack";
+            entity.ai.steeringEntity.setMaxLinearAcceleration(0);
         }
 
         @Override
@@ -57,15 +54,24 @@ public enum JavelinerState implements State<AIEntity> {
 
         @Override
         public boolean onMessage(AIEntity entity, Telegram telegram) {
-            PositionComponent pos = entity.system.posMapper.get(entity.id);
-            Vector2 target = (Vector2) telegram.extraInfo;
-            entity.system.fireProjectile(pos.x, pos.y, target.x, target.y, 150);
+            if(entity.ai.steeringEntity.getPosition().dst(entity.system.playerPos) < 32) {
+                Vector2 pos = entity.ai.steeringEntity.getPosition();
+                Vector2 playerPos = entity.system.playerPos;
+                AnimationComponent.Direction currentFacing = entity.system.animMapper.get(entity.id).direction;
+                AnimationComponent.Direction facingToPlayer = AnimationSystem.getDirectionFromAngle(pos.x, pos.y, playerPos.x, playerPos.y);
+
+                if(currentFacing == facingToPlayer) {
+                    entity.system.eventSystem.send(new HitEvent(entity.system.playerSystem.getPlayerId(), entity.id, 1));
+                }
+
+            }
+
             entity.ai.fsm.changeState(WALK);
             return true;
         }
     }
-    ;
 
+    ;
     @Override
     public void enter(AIEntity entity) {
 
